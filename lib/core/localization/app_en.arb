@@ -1,0 +1,37 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Spend Time",
+
+  "welcomeTitle": "Welcome",
+
+  "welcomeMessage": "What should we call you?",
+
+  "nameLabel": "Name",
+
+  "continueButton": "Continue",
+
+  "homeTitle": "Spend Time",
+
+  "noTopicsTitle": "No topics yet",
+
+  "noTopicsSubtitle": "Create your first topic",
+
+  "createTopic": "Create topic",
+
+  "homeTitle": "Spend Time",
+  "noTopicsTitle": "No topics yet",
+  "noTopicsSubtitle": "Create your first topic",
+  "createTopicTitle": "New topic",
+  "topicNameLabel": "Topic name",
+  "createButton": "Create",
+  "cancelButton": "Cancel",
+
+  "homeTitle": "Spend Time",
+  "noTopicsTitle": "No topics yet",
+  "noTopicsSubtitle": "Create your first topic",
+  "todayLabel": "Today",
+  "totalLabel": "Total",
+  "startButton": "Start",
+  "stopButton": "Stop"
+}

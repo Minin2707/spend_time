@@ -1,0 +1,37 @@
+{
+  "@@locale": "ru",
+
+  "appTitle": "Spend Time",
+
+  "welcomeTitle": "Добро пожаловать",
+
+  "welcomeMessage": "Как к вам обращаться?",
+
+  "nameLabel": "Имя",
+
+  "continueButton": "Продолжить",
+
+  "homeTitle": "Spend Time",
+
+  "noTopicsTitle": "Тем пока нет",
+
+  "noTopicsSubtitle": "Создайте первую тему",
+
+  "createTopic": "Создать тему",
+
+  "homeTitle": "Spend Time",
+  "noTopicsTitle": "Тем пока нет",
+  "noTopicsSubtitle": "Создайте первую тему",
+  "createTopicTitle": "Новая тема",
+  "topicNameLabel": "Название темы",
+  "createButton": "Создать",
+  "cancelButton": "Отмена",
+
+  "homeTitle": "Spend Time",
+  "noTopicsTitle": "Тем пока нет",
+  "noTopicsSubtitle": "Создайте свою первую тему",
+  "todayLabel": "Сегодня",
+  "totalLabel": "Всего",
+  "startButton": "Начать",
+  "stopButton": "Остановить"
+}
