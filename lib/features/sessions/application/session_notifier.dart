@@ -7,6 +7,7 @@ import 'package:spend_time/core/time/ticker_provider.dart';
 import 'package:spend_time/features/sessions/application/session_state.dart';
 import 'package:spend_time/features/sessions/data/session_repository.dart';
 import 'package:spend_time/features/sessions/data/session_repository_provider.dart';
+import 'package:spend_time/features/topics/application/topic_statistics_provider.dart';
 
 class SessionNotifier extends AsyncNotifier<SessionState> {
   late final SessionRepository _repository;
@@ -112,6 +113,12 @@ class SessionNotifier extends AsyncNotifier<SessionState> {
       );
       await _tickerSubscription?.cancel();
       _tickerSubscription = null;
+
+      ref.invalidate(
+        topicStatisticsProvider(
+          session.topicId,
+        ),
+      );
 
       return const SessionState();
     });

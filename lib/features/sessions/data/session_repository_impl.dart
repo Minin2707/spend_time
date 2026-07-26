@@ -1,14 +1,20 @@
 import 'package:drift/drift.dart';
+import 'package:spend_time/core/time/clock.dart';
 import 'package:spend_time/database/app_database.dart';
 import 'package:spend_time/database/daos/session_dao.dart';
 import 'package:spend_time/features/sessions/data/session_repository.dart';
+import 'package:spend_time/features/topics/domain/topic_statistics.dart';
+
 
 class SessionRepositoryImpl implements SessionRepository {
   SessionRepositoryImpl({
     required SessionDao sessionDao,
-  }) : _sessionDao = sessionDao;
+    required Clock clock,
+  })  : _sessionDao = sessionDao,
+        _clock = clock;
 
   final SessionDao _sessionDao;
+  final Clock _clock;
 
   @override
   Future<Session?> getActiveSession() {
@@ -51,6 +57,46 @@ class SessionRepositoryImpl implements SessionRepository {
         endedAt: Value(
           endedAt.millisecondsSinceEpoch,
         ),
+      ),
+    );
+  }
+
+  @override
+  Future<TopicStatistics> getStatistics({
+    required final int topicId,
+  }) async {
+    final DateTime now = _clock.now();
+
+    final DateTime startOfToday = DateTime(
+      now.year,
+      now.month,
+      now.day,
+    );
+
+    final DateTime endOfToday =
+    startOfToday.add(
+      const Duration(
+        days: 1,
+      ),
+    );
+
+    final int totalMillis =
+    await _sessionDao.getTotalDurationMillis(
+      topicId,
+    );
+    final int todayMillis =
+    await _sessionDao.getDurationBetween(
+      topicId,
+      startOfToday.millisecondsSinceEpoch,
+      endOfToday.millisecondsSinceEpoch,
+    );
+
+    return TopicStatistics(
+      today: Duration(
+        milliseconds: todayMillis,
+      ),
+      total: Duration(
+        milliseconds: totalMillis,
       ),
     );
   }

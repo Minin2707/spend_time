@@ -1,4 +1,5 @@
 import 'package:spend_time/database/app_database.dart';
+import 'package:spend_time/features/topics/domain/topic_statistics.dart';
 
 abstract interface class SessionRepository {
   Future<Session?> getActiveSession();
@@ -15,5 +16,9 @@ abstract interface class SessionRepository {
   Future<void> stopSession({
     required Session session,
     required DateTime endedAt,
+  });
+
+  Future<TopicStatistics> getStatistics({
+    required int topicId,
   });
 }

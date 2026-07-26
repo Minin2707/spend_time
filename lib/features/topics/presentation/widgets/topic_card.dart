@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spend_time/core/localization/l10n.dart';
 import 'package:spend_time/core/theme/app_spacing.dart';
 import 'package:spend_time/core/utils/duration_formatter.dart';
 import 'package:spend_time/core/widgets/app_button.dart';
 import 'package:spend_time/core/widgets/app_card.dart';
 import 'package:spend_time/database/app_database.dart';
+import 'package:spend_time/features/topics/application/topic_statistics_provider.dart';
+import 'package:spend_time/features/topics/domain/topic_statistics.dart';
 
-
-
-class TopicCard extends StatelessWidget {
+class TopicCard extends ConsumerWidget {
   const TopicCard({
     super.key,
     required this.topic,
@@ -20,7 +21,6 @@ class TopicCard extends StatelessWidget {
   });
 
   final Topic topic;
-
   final bool isActive;
   final Duration elapsed;
 
@@ -29,7 +29,19 @@ class TopicCard extends StatelessWidget {
   final VoidCallback? onTap;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+      BuildContext context,
+      WidgetRef ref,
+      ) {
+    final AsyncValue<TopicStatistics> statistics = ref.watch(
+      topicStatisticsProvider(
+        topic.id,
+      ),
+    );
+
+    final TopicStatistics topicStatistics =
+        statistics.value ?? TopicStatistics.empty;
+
     return AppCard(
       onTap: onTap,
       child: Padding(
@@ -57,7 +69,9 @@ class TopicCard extends StatelessWidget {
                 ),
                 Text(
                   DurationFormatter.formatClock(
-                    elapsed,
+                    isActive
+                        ? elapsed
+                        : topicStatistics.today,
                   ),
                 ),
               ],
@@ -74,7 +88,12 @@ class TopicCard extends StatelessWidget {
                     context.l10n.totalLabel,
                   ),
                 ),
-                const Text('0 min'),
+
+                Text(
+                  DurationFormatter.formatClock(
+                    topicStatistics.total,
+                  ),
+                ),
               ],
             ),
 
