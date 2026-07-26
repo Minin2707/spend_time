@@ -199,6 +199,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stop'**
   String get stopButton;
+
+  /// No description provided for @noSessionHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No sessions yet'**
+  String get noSessionHistoryTitle;
+
+  /// No description provided for @noSessionHistorySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed sessions will appear here'**
+  String get noSessionHistorySubtitle;
 }
 
 class _AppLocalizationsDelegate

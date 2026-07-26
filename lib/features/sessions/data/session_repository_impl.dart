@@ -3,6 +3,7 @@ import 'package:spend_time/core/time/clock.dart';
 import 'package:spend_time/database/app_database.dart';
 import 'package:spend_time/database/daos/session_dao.dart';
 import 'package:spend_time/features/sessions/data/session_repository.dart';
+import 'package:spend_time/features/sessions/domain/session_history_item.dart';
 import 'package:spend_time/features/topics/domain/topic_statistics.dart';
 
 
@@ -28,6 +29,47 @@ class SessionRepositoryImpl implements SessionRepository {
     return _sessionDao.getSessionsByTopic(
       topicId,
     );
+  }
+
+  @override
+  Future<List<SessionHistoryItem>> getSessionHistory({
+    required final int topicId,
+  }) async {
+    final List<Session> sessions =
+    await _sessionDao.getSessionsByTopic(
+      topicId,
+    );
+
+    final List<SessionHistoryItem> history = [];
+
+    for (final Session session in sessions) {
+      final int? endedAtMillis = session.endedAt;
+
+      if (endedAtMillis == null) {
+        continue;
+      }
+
+      final DateTime startedAt =
+      DateTime.fromMillisecondsSinceEpoch(
+        session.startedAt,
+      );
+      final DateTime endedAt =
+      DateTime.fromMillisecondsSinceEpoch(
+        endedAtMillis,
+      );
+
+      history.add(
+        SessionHistoryItem(
+          startedAt: startedAt,
+          endedAt: endedAt,
+          duration: endedAt.difference(
+            startedAt,
+          ),
+        ),
+      );
+    }
+
+    return history;
   }
 
   @override

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spend_time/core/localization/l10n.dart';
+import 'package:spend_time/core/router/app_routes.dart';
 import 'package:spend_time/core/theme/app_spacing.dart';
 import 'package:spend_time/core/widgets/app_empty_view.dart';
 import 'package:spend_time/core/widgets/app_error_view.dart';
@@ -79,6 +81,13 @@ class HomeScreen extends ConsumerWidget {
                   ref.read(
                     sessionProvider.notifier,
                   ).stopSession();
+                },
+                onTap: () {
+                  context.push(
+                    AppRoutes.sessionHistoryLocation(
+                      topic.id,
+                    ),
+                  );
                 },
               );
             },

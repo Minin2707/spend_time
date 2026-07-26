@@ -33,5 +33,7 @@
   "todayLabel": "Today",
   "totalLabel": "Total",
   "startButton": "Start",
-  "stopButton": "Stop"
+  "stopButton": "Stop",
+  "noSessionHistoryTitle": "No sessions yet",
+  "noSessionHistorySubtitle": "Completed sessions will appear here"
 }

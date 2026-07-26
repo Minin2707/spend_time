@@ -19,19 +19,15 @@
 
   "createTopic": "Создать тему",
 
-  "homeTitle": "Spend Time",
-  "noTopicsTitle": "Тем пока нет",
-  "noTopicsSubtitle": "Создайте первую тему",
   "createTopicTitle": "Новая тема",
   "topicNameLabel": "Название темы",
   "createButton": "Создать",
   "cancelButton": "Отмена",
 
-  "homeTitle": "Spend Time",
-  "noTopicsTitle": "Тем пока нет",
-  "noTopicsSubtitle": "Создайте свою первую тему",
   "todayLabel": "Сегодня",
   "totalLabel": "Всего",
   "startButton": "Начать",
-  "stopButton": "Остановить"
+  "stopButton": "Остановить",
+  "noSessionHistoryTitle": "Истории пока нет",
+  "noSessionHistorySubtitle": "Завершённые сессии появятся здесь"
 }

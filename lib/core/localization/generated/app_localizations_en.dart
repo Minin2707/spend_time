@@ -58,4 +58,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stopButton => 'Stop';
+
+  @override
+  String get noSessionHistoryTitle => 'No sessions yet';
+
+  @override
+  String get noSessionHistorySubtitle => 'Completed sessions will appear here';
 }

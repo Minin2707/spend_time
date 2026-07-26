@@ -30,7 +30,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get noTopicsTitle => 'Тем пока нет';
 
   @override
-  String get noTopicsSubtitle => 'Создайте свою первую тему';
+  String get noTopicsSubtitle => 'Создайте первую тему';
 
   @override
   String get createTopic => 'Создать тему';
@@ -58,4 +58,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get stopButton => 'Остановить';
+
+  @override
+  String get noSessionHistoryTitle => 'Истории пока нет';
+
+  @override
+  String get noSessionHistorySubtitle => 'Завершённые сессии появятся здесь';
 }
