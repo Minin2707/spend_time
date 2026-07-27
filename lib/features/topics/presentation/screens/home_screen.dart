@@ -8,8 +8,10 @@ import 'package:spend_time/core/widgets/app_empty_view.dart';
 import 'package:spend_time/core/widgets/app_error_view.dart';
 import 'package:spend_time/core/widgets/app_loading_view.dart';
 import 'package:spend_time/features/sessions/application/session_provider.dart';
+import 'package:spend_time/features/topics/application/active_topic_deletion_exception.dart';
 import 'package:spend_time/features/topics/application/topics_notifier.dart';
 import 'package:spend_time/features/topics/presentation/dialogs/create_topic_dialog.dart';
+import 'package:spend_time/features/topics/presentation/dialogs/delete_topic_dialog.dart';
 import 'package:spend_time/features/topics/presentation/widgets/topic_card.dart';
 
 
@@ -39,6 +41,18 @@ class HomeScreen extends ConsumerWidget {
         title: Text(
           context.l10n.homeTitle,
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.analytics,
+            ),
+            onPressed: () {
+              context.push(
+                AppRoutes.statistics,
+              );
+            },
+          ),
+        ],
       ),
       body: topics.when(
         data: (items) {
@@ -88,6 +102,38 @@ class HomeScreen extends ConsumerWidget {
                       topic.id,
                     ),
                   );
+                },
+                onDelete: () async {
+                  final bool? confirmed = await showDialog<bool>(
+                    context: context,
+                    builder: (_) => DeleteTopicDialog(
+                      topicName: topic.name,
+                    ),
+                  );
+
+                  if (confirmed != true) {
+                    return;
+                  }
+
+                  try {
+                    await ref.read(
+                      topicsProvider.notifier,
+                    ).deleteTopic(
+                      id: topic.id,
+                    );
+                  } on ActiveTopicDeletionException {
+                    if (!context.mounted) {
+                      return;
+                    }
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          context.l10n.deleteActiveTopicMessage,
+                        ),
+                      ),
+                    );
+                  }
                 },
               );
             },

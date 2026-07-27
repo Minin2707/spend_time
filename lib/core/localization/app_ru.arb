@@ -29,5 +29,17 @@
   "startButton": "Начать",
   "stopButton": "Остановить",
   "noSessionHistoryTitle": "Истории пока нет",
-  "noSessionHistorySubtitle": "Завершённые сессии появятся здесь"
+  "noSessionHistorySubtitle": "Завершённые сессии появятся здесь",
+  "deleteTopicTitle": "Удалить тему?",
+  "deleteTopicMessage": "Тема «{topicName}» и вся её история сессий будут удалены.",
+  "@deleteTopicMessage": {
+    "placeholders": {
+      "topicName": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTopicConfirmButton": "Удалить",
+  "deleteTopicMenuItem": "Удалить",
+  "deleteActiveTopicMessage": "Сначала остановите активную сессию, затем удалите тему."
 }

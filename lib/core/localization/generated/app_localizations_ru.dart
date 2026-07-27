@@ -64,4 +64,22 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get noSessionHistorySubtitle => 'Завершённые сессии появятся здесь';
+
+  @override
+  String get deleteTopicTitle => 'Удалить тему?';
+
+  @override
+  String deleteTopicMessage(String topicName) {
+    return 'Тема «$topicName» и вся её история сессий будут удалены.';
+  }
+
+  @override
+  String get deleteTopicConfirmButton => 'Удалить';
+
+  @override
+  String get deleteTopicMenuItem => 'Удалить';
+
+  @override
+  String get deleteActiveTopicMessage =>
+      'Сначала остановите активную сессию, затем удалите тему.';
 }

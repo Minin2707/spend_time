@@ -211,6 +211,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Completed sessions will appear here'**
   String get noSessionHistorySubtitle;
+
+  /// No description provided for @deleteTopicTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete topic?'**
+  String get deleteTopicTitle;
+
+  /// No description provided for @deleteTopicMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This will delete \"{topicName}\" and all of its session history.'**
+  String deleteTopicMessage(String topicName);
+
+  /// No description provided for @deleteTopicConfirmButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteTopicConfirmButton;
+
+  /// No description provided for @deleteTopicMenuItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteTopicMenuItem;
+
+  /// No description provided for @deleteActiveTopicMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop the active session before deleting this topic.'**
+  String get deleteActiveTopicMessage;
 }
 
 class _AppLocalizationsDelegate

@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spend_time/database/app_database.dart';
+import 'package:spend_time/features/sessions/application/session_provider.dart';
+import 'package:spend_time/features/topics/application/active_topic_deletion_exception.dart';
 import 'package:spend_time/features/topics/data/topic_repository.dart';
 import 'package:spend_time/features/topics/data/topic_repository_provider.dart';
 
@@ -33,6 +35,17 @@ class TopicsNotifier extends AsyncNotifier<List<Topic>> {
   Future<void> deleteTopic({
     required int id,
   }) async {
+    final activeSession =
+        ref.read(
+          sessionProvider,
+        ).value?.activeSession;
+
+    if (activeSession?.topicId == id) {
+      throw ActiveTopicDeletionException(
+        topicId: id,
+      );
+    }
+
     await _repository.deleteTopic(
       id: id,
     );

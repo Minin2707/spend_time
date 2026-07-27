@@ -48,6 +48,9 @@ class AppDatabase extends _$AppDatabase {
       }
     },
     beforeOpen: (OpeningDetails details) async {
+      await customStatement(
+        'PRAGMA foreign_keys = ON',
+      );
       // Дополнительная настройка базы.
     },
   );

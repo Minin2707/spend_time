@@ -18,6 +18,7 @@ class TopicCard extends ConsumerWidget {
     required this.onStart,
     required this.onStop,
     this.onTap,
+    this.onDelete,
   });
 
   final Topic topic;
@@ -27,6 +28,7 @@ class TopicCard extends ConsumerWidget {
   final VoidCallback onStart;
   final VoidCallback onStop;
   final VoidCallback? onTap;
+  final VoidCallback? onDelete;
 
   @override
   Widget build(
@@ -51,9 +53,45 @@ class TopicCard extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              topic.name,
-              style: Theme.of(context).textTheme.titleMedium,
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    topic.name,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                if (onDelete != null)
+                  PopupMenuButton<_TopicCardAction>(
+                    icon: const Icon(
+                      Icons.more_vert,
+                    ),
+                    onSelected: (action) {
+                      switch (action) {
+                        case _TopicCardAction.delete:
+                          onDelete?.call();
+                      }
+                    },
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        value: _TopicCardAction.delete,
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.delete_outline,
+                            ),
+                            const SizedBox(
+                              width: AppSpacing.sm,
+                            ),
+                            Text(
+                              context.l10n.deleteTopicMenuItem,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
             ),
 
             const SizedBox(
@@ -114,4 +152,8 @@ class TopicCard extends ConsumerWidget {
       ),
     );
   }
+}
+
+enum _TopicCardAction {
+  delete,
 }

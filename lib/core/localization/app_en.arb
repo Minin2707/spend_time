@@ -35,5 +35,17 @@
   "startButton": "Start",
   "stopButton": "Stop",
   "noSessionHistoryTitle": "No sessions yet",
-  "noSessionHistorySubtitle": "Completed sessions will appear here"
+  "noSessionHistorySubtitle": "Completed sessions will appear here",
+  "deleteTopicTitle": "Delete topic?",
+  "deleteTopicMessage": "This will delete \"{topicName}\" and all of its session history.",
+  "@deleteTopicMessage": {
+    "placeholders": {
+      "topicName": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTopicConfirmButton": "Delete",
+  "deleteTopicMenuItem": "Delete",
+  "deleteActiveTopicMessage": "Stop the active session before deleting this topic."
 }

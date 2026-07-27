@@ -64,4 +64,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noSessionHistorySubtitle => 'Completed sessions will appear here';
+
+  @override
+  String get deleteTopicTitle => 'Delete topic?';
+
+  @override
+  String deleteTopicMessage(String topicName) {
+    return 'This will delete \"$topicName\" and all of its session history.';
+  }
+
+  @override
+  String get deleteTopicConfirmButton => 'Delete';
+
+  @override
+  String get deleteTopicMenuItem => 'Delete';
+
+  @override
+  String get deleteActiveTopicMessage =>
+      'Stop the active session before deleting this topic.';
 }
