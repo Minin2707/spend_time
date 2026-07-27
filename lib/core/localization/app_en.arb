@@ -47,5 +47,11 @@
   },
   "deleteTopicConfirmButton": "Delete",
   "deleteTopicMenuItem": "Delete",
-  "deleteActiveTopicMessage": "Stop the active session before deleting this topic."
+  "deleteActiveTopicMessage": "Stop the active session before deleting this topic.",
+  "editTopicTitle": "Edit topic",
+  "editTopicNameLabel": "Topic name",
+  "editTopicSaveButton": "Save",
+  "editTopicMenuItem": "Edit",
+  "emptyTopicNameMessage": "Topic name cannot be empty.",
+  "updateTopicErrorMessage": "Could not update topic."
 }

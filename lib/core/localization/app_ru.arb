@@ -41,5 +41,11 @@
   },
   "deleteTopicConfirmButton": "Удалить",
   "deleteTopicMenuItem": "Удалить",
-  "deleteActiveTopicMessage": "Сначала остановите активную сессию, затем удалите тему."
+  "deleteActiveTopicMessage": "Сначала остановите активную сессию, затем удалите тему.",
+  "editTopicTitle": "Редактировать тему",
+  "editTopicNameLabel": "Название темы",
+  "editTopicSaveButton": "Сохранить",
+  "editTopicMenuItem": "Редактировать",
+  "emptyTopicNameMessage": "Название темы не может быть пустым.",
+  "updateTopicErrorMessage": "Не удалось обновить тему."
 }

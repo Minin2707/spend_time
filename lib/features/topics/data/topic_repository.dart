@@ -7,6 +7,11 @@ abstract interface class TopicRepository {
     required String name,
   });
 
+  Future<void> renameTopic({
+    required int id,
+    required String name,
+  });
+
   Future<void> deleteTopic({
     required int id,
   });

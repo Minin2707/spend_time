@@ -31,6 +31,25 @@ class TopicDao extends DatabaseAccessor<AppDatabase>
     return into(topics).insert(topic);
   }
 
+  Future<bool> renameTopic({
+    required int id,
+    required String name,
+  }) async {
+    final int updatedRows = await (update(topics)
+      ..where(
+            (table) => table.id.equals(id),
+      ))
+        .write(
+      TopicsCompanion(
+        name: Value(
+          name,
+        ),
+      ),
+    );
+
+    return updatedRows > 0;
+  }
+
   Future<int> deleteTopic(
       final int id,
       ) {

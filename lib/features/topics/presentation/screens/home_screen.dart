@@ -9,9 +9,12 @@ import 'package:spend_time/core/widgets/app_error_view.dart';
 import 'package:spend_time/core/widgets/app_loading_view.dart';
 import 'package:spend_time/features/sessions/application/session_provider.dart';
 import 'package:spend_time/features/topics/application/active_topic_deletion_exception.dart';
+import 'package:spend_time/features/topics/application/empty_topic_name_exception.dart';
 import 'package:spend_time/features/topics/application/topics_notifier.dart';
+import 'package:spend_time/features/topics/data/topic_update_exception.dart';
 import 'package:spend_time/features/topics/presentation/dialogs/create_topic_dialog.dart';
 import 'package:spend_time/features/topics/presentation/dialogs/delete_topic_dialog.dart';
+import 'package:spend_time/features/topics/presentation/dialogs/edit_topic_dialog.dart';
 import 'package:spend_time/features/topics/presentation/widgets/topic_card.dart';
 
 
@@ -102,6 +105,51 @@ class HomeScreen extends ConsumerWidget {
                       topic.id,
                     ),
                   );
+                },
+                onEdit: () async {
+                  final String? newName = await showDialog<String>(
+                    context: context,
+                    builder: (_) => EditTopicDialog(
+                      initialName: topic.name,
+                    ),
+                  );
+
+                  if (newName == null) {
+                    return;
+                  }
+
+                  try {
+                    await ref.read(
+                      topicsProvider.notifier,
+                    ).renameTopic(
+                      id: topic.id,
+                      name: newName,
+                    );
+                  } on EmptyTopicNameException {
+                    if (!context.mounted) {
+                      return;
+                    }
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          context.l10n.emptyTopicNameMessage,
+                        ),
+                      ),
+                    );
+                  } on TopicUpdateException {
+                    if (!context.mounted) {
+                      return;
+                    }
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          context.l10n.updateTopicErrorMessage,
+                        ),
+                      ),
+                    );
+                  }
                 },
                 onDelete: () async {
                   final bool? confirmed = await showDialog<bool>(

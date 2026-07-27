@@ -241,6 +241,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stop the active session before deleting this topic.'**
   String get deleteActiveTopicMessage;
+
+  /// No description provided for @editTopicTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit topic'**
+  String get editTopicTitle;
+
+  /// No description provided for @editTopicNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Topic name'**
+  String get editTopicNameLabel;
+
+  /// No description provided for @editTopicSaveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get editTopicSaveButton;
+
+  /// No description provided for @editTopicMenuItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get editTopicMenuItem;
+
+  /// No description provided for @emptyTopicNameMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Topic name cannot be empty.'**
+  String get emptyTopicNameMessage;
+
+  /// No description provided for @updateTopicErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not update topic.'**
+  String get updateTopicErrorMessage;
 }
 
 class _AppLocalizationsDelegate

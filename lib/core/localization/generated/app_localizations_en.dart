@@ -82,4 +82,22 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get deleteActiveTopicMessage =>
       'Stop the active session before deleting this topic.';
+
+  @override
+  String get editTopicTitle => 'Edit topic';
+
+  @override
+  String get editTopicNameLabel => 'Topic name';
+
+  @override
+  String get editTopicSaveButton => 'Save';
+
+  @override
+  String get editTopicMenuItem => 'Edit';
+
+  @override
+  String get emptyTopicNameMessage => 'Topic name cannot be empty.';
+
+  @override
+  String get updateTopicErrorMessage => 'Could not update topic.';
 }

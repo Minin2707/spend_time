@@ -82,4 +82,22 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get deleteActiveTopicMessage =>
       'Сначала остановите активную сессию, затем удалите тему.';
+
+  @override
+  String get editTopicTitle => 'Редактировать тему';
+
+  @override
+  String get editTopicNameLabel => 'Название темы';
+
+  @override
+  String get editTopicSaveButton => 'Сохранить';
+
+  @override
+  String get editTopicMenuItem => 'Редактировать';
+
+  @override
+  String get emptyTopicNameMessage => 'Название темы не может быть пустым.';
+
+  @override
+  String get updateTopicErrorMessage => 'Не удалось обновить тему.';
 }
