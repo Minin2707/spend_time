@@ -11,5 +11,11 @@ class Topics extends Table {
     ),
   )();
 
+  TextColumn get iconKey => text().withDefault(
+    const Constant<String>(
+      'book',
+    ),
+  )();
+
   IntColumn get createdAt => integer()();
 }

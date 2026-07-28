@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spend_time/core/localization/l10n.dart';
 import 'package:spend_time/core/theme/app_spacing.dart';
 import 'package:spend_time/features/topics/domain/topic_color_key.dart';
+import 'package:spend_time/features/topics/domain/topic_icon_key.dart';
 import 'package:spend_time/features/topics/presentation/dialogs/edit_topic_result.dart';
 import 'package:spend_time/features/topics/presentation/widgets/topic_color_selector.dart';
 
@@ -10,10 +11,12 @@ class EditTopicDialog extends StatefulWidget {
     super.key,
     required this.initialName,
     required this.initialColor,
+    required this.initialIcon,
   });
 
   final String initialName;
   final TopicColorKey initialColor;
+  final TopicIconKey initialIcon;
 
   @override
   State<EditTopicDialog> createState() =>
@@ -111,6 +114,7 @@ class _EditTopicDialogState extends State<EditTopicDialog> {
                     EditTopicResult(
                       name: _controller.text,
                       colorKey: _selectedColor,
+                      iconKey: widget.initialIcon,
                     ),
                   );
                 }

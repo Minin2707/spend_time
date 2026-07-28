@@ -99,6 +99,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get emptyTopicNameMessage => 'Название темы не может быть пустым.';
 
   @override
+  String get createTopicErrorMessage => 'Не удалось создать тему.';
+
+  @override
   String get updateTopicErrorMessage => 'Не удалось обновить тему.';
 
   @override

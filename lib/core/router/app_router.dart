@@ -4,6 +4,7 @@ import 'package:spend_time/core/settings/presentation/screens/settings_screen.da
 import 'package:spend_time/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:spend_time/features/sessions/presentation/screens/session_history_screen.dart';
 import 'package:spend_time/features/statistics/presentation/screens/statistics_screen.dart';
+import 'package:spend_time/features/topics/presentation/screens/create_topic_screen.dart';
 import 'package:spend_time/features/topics/presentation/screens/home_screen.dart';
 
 abstract final class AppRouter {
@@ -29,6 +30,10 @@ abstract final class AppRouter {
       GoRoute(
         path: AppRoutes.settings,
         builder: (_, _) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.createTopic,
+        builder: (_, _) => const CreateTopicScreen(),
       ),
       GoRoute(
         path: AppRoutes.sessionHistory,

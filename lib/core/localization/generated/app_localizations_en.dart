@@ -99,6 +99,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emptyTopicNameMessage => 'Topic name cannot be empty.';
 
   @override
+  String get createTopicErrorMessage => 'Could not create topic.';
+
+  @override
   String get updateTopicErrorMessage => 'Could not update topic.';
 
   @override

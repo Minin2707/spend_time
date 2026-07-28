@@ -47,6 +47,7 @@
   "editTopicSaveButton": "Сохранить",
   "editTopicMenuItem": "Редактировать",
   "emptyTopicNameMessage": "Название темы не может быть пустым.",
+  "createTopicErrorMessage": "Не удалось создать тему.",
   "updateTopicErrorMessage": "Не удалось обновить тему.",
   "themeModeLight": "Светлая",
   "themeModeDark": "Тёмная",

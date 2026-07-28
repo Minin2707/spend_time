@@ -53,6 +53,7 @@
   "editTopicSaveButton": "Save",
   "editTopicMenuItem": "Edit",
   "emptyTopicNameMessage": "Topic name cannot be empty.",
+  "createTopicErrorMessage": "Could not create topic.",
   "updateTopicErrorMessage": "Could not update topic.",
   "themeModeLight": "Light",
   "themeModeDark": "Dark",

@@ -272,6 +272,12 @@ abstract class AppLocalizations {
   /// **'Topic name cannot be empty.'**
   String get emptyTopicNameMessage;
 
+  /// No description provided for @createTopicErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not create topic.'**
+  String get createTopicErrorMessage;
+
   /// No description provided for @updateTopicErrorMessage.
   ///
   /// In en, this message translates to:

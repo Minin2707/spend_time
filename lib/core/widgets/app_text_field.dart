@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppTextField extends StatelessWidget {
   const AppTextField({
     super.key,
-    required this.controller,
+    this.controller,
     this.labelText,
     this.hintText,
     this.keyboardType,
@@ -15,7 +15,7 @@ class AppTextField extends StatelessWidget {
     this.onSubmitted,
   });
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
   final String? labelText;
   final String? hintText;

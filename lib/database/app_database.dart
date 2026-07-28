@@ -33,7 +33,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -64,6 +64,14 @@ class AppDatabase extends _$AppDatabase {
           appSettings,
         );
         await _ensureAppSettingsRow();
+      }
+      if (from < 5) {
+        await customStatement(
+          '''
+          ALTER TABLE topics
+          ADD COLUMN icon_key TEXT NOT NULL DEFAULT 'book'
+          ''',
+        );
       }
     },
     beforeOpen: (OpeningDetails details) async {

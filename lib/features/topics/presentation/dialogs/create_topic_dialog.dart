@@ -4,6 +4,7 @@ import 'package:spend_time/core/theme/app_spacing.dart';
 import 'package:spend_time/core/widgets/app_button.dart';
 import 'package:spend_time/core/widgets/app_text_field.dart';
 import 'package:spend_time/features/topics/domain/topic_color_key.dart';
+import 'package:spend_time/features/topics/domain/topic_icon_key.dart';
 import 'package:spend_time/features/topics/presentation/dialogs/create_topic_result.dart';
 import 'package:spend_time/features/topics/presentation/widgets/topic_color_selector.dart';
 
@@ -92,6 +93,7 @@ class _CreateTopicDialogState
       CreateTopicResult(
         name: name,
         colorKey: _selectedColor,
+        iconKey: TopicIconKey.book,
       ),
     );
   }

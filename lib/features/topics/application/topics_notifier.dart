@@ -8,6 +8,7 @@ import 'package:spend_time/features/topics/application/empty_topic_name_exceptio
 import 'package:spend_time/features/topics/data/topic_repository.dart';
 import 'package:spend_time/features/topics/data/topic_repository_provider.dart';
 import 'package:spend_time/features/topics/domain/topic_color_key.dart';
+import 'package:spend_time/features/topics/domain/topic_icon_key.dart';
 
 final topicsProvider =
 AsyncNotifierProvider<TopicsNotifier, List<Topic>>(
@@ -27,10 +28,12 @@ class TopicsNotifier extends AsyncNotifier<List<Topic>> {
   Future<void> createTopic({
     required String name,
     required TopicColorKey colorKey,
+    required TopicIconKey iconKey,
   }) async {
     await _repository.createTopic(
       name: name,
       colorKey: colorKey,
+      iconKey: iconKey,
     );
 
     state = await AsyncValue.guard(
@@ -42,6 +45,7 @@ class TopicsNotifier extends AsyncNotifier<List<Topic>> {
     required int id,
     required String name,
     required TopicColorKey colorKey,
+    required TopicIconKey iconKey,
   }) async {
     final String normalizedName = name.trim();
 
@@ -53,6 +57,7 @@ class TopicsNotifier extends AsyncNotifier<List<Topic>> {
       id: id,
       name: normalizedName,
       colorKey: colorKey,
+      iconKey: iconKey,
     );
 
     for (final StatisticsPeriod period in StatisticsPeriod.values) {

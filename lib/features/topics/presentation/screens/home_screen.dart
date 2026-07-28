@@ -12,8 +12,7 @@ import 'package:spend_time/features/topics/application/empty_topic_name_exceptio
 import 'package:spend_time/features/topics/application/topics_notifier.dart';
 import 'package:spend_time/features/topics/data/topic_update_exception.dart';
 import 'package:spend_time/features/topics/domain/topic_color_key.dart';
-import 'package:spend_time/features/topics/presentation/dialogs/create_topic_dialog.dart';
-import 'package:spend_time/features/topics/presentation/dialogs/create_topic_result.dart';
+import 'package:spend_time/features/topics/domain/topic_icon_key.dart';
 import 'package:spend_time/features/topics/presentation/dialogs/delete_topic_dialog.dart';
 import 'package:spend_time/features/topics/presentation/dialogs/edit_topic_dialog.dart';
 import 'package:spend_time/features/topics/presentation/dialogs/edit_topic_result.dart';
@@ -77,9 +76,8 @@ class HomeScreen extends ConsumerWidget {
               title: context.l10n.noTopicsTitle,
               subtitle: context.l10n.noTopicsSubtitle,
               buttonText: context.l10n.createTopic,
-              onCreateTopic: () => _showCreateTopicDialog(
+              onCreateTopic: () => _openCreateTopicScreen(
                 context,
-                ref,
               ),
             );
           }
@@ -132,6 +130,9 @@ class HomeScreen extends ConsumerWidget {
                       initialColor: TopicColorKey.fromStorageValue(
                         topic.colorKey,
                       ),
+                      initialIcon: TopicIconKey.fromStorageValue(
+                        topic.iconKey,
+                      ),
                     ),
                   );
 
@@ -146,6 +147,7 @@ class HomeScreen extends ConsumerWidget {
                       id: topic.id,
                       name: result.name,
                       colorKey: result.colorKey,
+                      iconKey: result.iconKey,
                     );
                   } on EmptyTopicNameException {
                     if (!context.mounted) {
@@ -215,9 +217,8 @@ class HomeScreen extends ConsumerWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _showCreateTopicDialog(
+        onPressed: () => _openCreateTopicScreen(
           context,
-          ref,
         ),
         child: const Icon(
           Icons.add,
@@ -226,25 +227,11 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _showCreateTopicDialog(
+  Future<void> _openCreateTopicScreen(
     BuildContext context,
-    WidgetRef ref,
   ) async {
-    final CreateTopicResult? result =
-    await showDialog<CreateTopicResult>(
-      context: context,
-      builder: (_) => const CreateTopicDialog(),
-    );
-
-    if (result == null) {
-      return;
-    }
-
-    await ref.read(
-      topicsProvider.notifier,
-    ).createTopic(
-      name: result.name,
-      colorKey: result.colorKey,
+    await context.push<bool>(
+      AppRoutes.createTopic,
     );
   }
 }

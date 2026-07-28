@@ -491,6 +491,18 @@ class $TopicsTable extends Topics with TableInfo<$TopicsTable, Topic> {
     requiredDuringInsert: false,
     defaultValue: const Constant<String>('blue'),
   );
+  static const VerificationMeta _iconKeyMeta = const VerificationMeta(
+    'iconKey',
+  );
+  @override
+  late final GeneratedColumn<String> iconKey = GeneratedColumn<String>(
+    'icon_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant<String>('book'),
+  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -503,7 +515,13 @@ class $TopicsTable extends Topics with TableInfo<$TopicsTable, Topic> {
     requiredDuringInsert: true,
   );
   @override
-  List<GeneratedColumn> get $columns => [id, name, colorKey, createdAt];
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    colorKey,
+    iconKey,
+    createdAt,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -531,6 +549,12 @@ class $TopicsTable extends Topics with TableInfo<$TopicsTable, Topic> {
       context.handle(
         _colorKeyMeta,
         colorKey.isAcceptableOrUnknown(data['color_key']!, _colorKeyMeta),
+      );
+    }
+    if (data.containsKey('icon_key')) {
+      context.handle(
+        _iconKeyMeta,
+        iconKey.isAcceptableOrUnknown(data['icon_key']!, _iconKeyMeta),
       );
     }
     if (data.containsKey('created_at')) {
@@ -562,6 +586,10 @@ class $TopicsTable extends Topics with TableInfo<$TopicsTable, Topic> {
         DriftSqlType.string,
         data['${effectivePrefix}color_key'],
       )!,
+      iconKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}icon_key'],
+      )!,
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}created_at'],
@@ -579,11 +607,13 @@ class Topic extends DataClass implements Insertable<Topic> {
   final int id;
   final String name;
   final String colorKey;
+  final String iconKey;
   final int createdAt;
   const Topic({
     required this.id,
     required this.name,
     required this.colorKey,
+    required this.iconKey,
     required this.createdAt,
   });
   @override
@@ -592,6 +622,7 @@ class Topic extends DataClass implements Insertable<Topic> {
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
     map['color_key'] = Variable<String>(colorKey);
+    map['icon_key'] = Variable<String>(iconKey);
     map['created_at'] = Variable<int>(createdAt);
     return map;
   }
@@ -601,6 +632,7 @@ class Topic extends DataClass implements Insertable<Topic> {
       id: Value(id),
       name: Value(name),
       colorKey: Value(colorKey),
+      iconKey: Value(iconKey),
       createdAt: Value(createdAt),
     );
   }
@@ -614,6 +646,7 @@ class Topic extends DataClass implements Insertable<Topic> {
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       colorKey: serializer.fromJson<String>(json['colorKey']),
+      iconKey: serializer.fromJson<String>(json['iconKey']),
       createdAt: serializer.fromJson<int>(json['createdAt']),
     );
   }
@@ -624,22 +657,30 @@ class Topic extends DataClass implements Insertable<Topic> {
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
       'colorKey': serializer.toJson<String>(colorKey),
+      'iconKey': serializer.toJson<String>(iconKey),
       'createdAt': serializer.toJson<int>(createdAt),
     };
   }
 
-  Topic copyWith({int? id, String? name, String? colorKey, int? createdAt}) =>
-      Topic(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        colorKey: colorKey ?? this.colorKey,
-        createdAt: createdAt ?? this.createdAt,
-      );
+  Topic copyWith({
+    int? id,
+    String? name,
+    String? colorKey,
+    String? iconKey,
+    int? createdAt,
+  }) => Topic(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    colorKey: colorKey ?? this.colorKey,
+    iconKey: iconKey ?? this.iconKey,
+    createdAt: createdAt ?? this.createdAt,
+  );
   Topic copyWithCompanion(TopicsCompanion data) {
     return Topic(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
       colorKey: data.colorKey.present ? data.colorKey.value : this.colorKey,
+      iconKey: data.iconKey.present ? data.iconKey.value : this.iconKey,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
     );
   }
@@ -650,13 +691,14 @@ class Topic extends DataClass implements Insertable<Topic> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('colorKey: $colorKey, ')
+          ..write('iconKey: $iconKey, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, colorKey, createdAt);
+  int get hashCode => Object.hash(id, name, colorKey, iconKey, createdAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -664,6 +706,7 @@ class Topic extends DataClass implements Insertable<Topic> {
           other.id == this.id &&
           other.name == this.name &&
           other.colorKey == this.colorKey &&
+          other.iconKey == this.iconKey &&
           other.createdAt == this.createdAt);
 }
 
@@ -671,17 +714,20 @@ class TopicsCompanion extends UpdateCompanion<Topic> {
   final Value<int> id;
   final Value<String> name;
   final Value<String> colorKey;
+  final Value<String> iconKey;
   final Value<int> createdAt;
   const TopicsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.colorKey = const Value.absent(),
+    this.iconKey = const Value.absent(),
     this.createdAt = const Value.absent(),
   });
   TopicsCompanion.insert({
     this.id = const Value.absent(),
     required String name,
     this.colorKey = const Value.absent(),
+    this.iconKey = const Value.absent(),
     required int createdAt,
   }) : name = Value(name),
        createdAt = Value(createdAt);
@@ -689,12 +735,14 @@ class TopicsCompanion extends UpdateCompanion<Topic> {
     Expression<int>? id,
     Expression<String>? name,
     Expression<String>? colorKey,
+    Expression<String>? iconKey,
     Expression<int>? createdAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
       if (colorKey != null) 'color_key': colorKey,
+      if (iconKey != null) 'icon_key': iconKey,
       if (createdAt != null) 'created_at': createdAt,
     });
   }
@@ -703,12 +751,14 @@ class TopicsCompanion extends UpdateCompanion<Topic> {
     Value<int>? id,
     Value<String>? name,
     Value<String>? colorKey,
+    Value<String>? iconKey,
     Value<int>? createdAt,
   }) {
     return TopicsCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       colorKey: colorKey ?? this.colorKey,
+      iconKey: iconKey ?? this.iconKey,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -725,6 +775,9 @@ class TopicsCompanion extends UpdateCompanion<Topic> {
     if (colorKey.present) {
       map['color_key'] = Variable<String>(colorKey.value);
     }
+    if (iconKey.present) {
+      map['icon_key'] = Variable<String>(iconKey.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<int>(createdAt.value);
     }
@@ -737,6 +790,7 @@ class TopicsCompanion extends UpdateCompanion<Topic> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('colorKey: $colorKey, ')
+          ..write('iconKey: $iconKey, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
@@ -1356,6 +1410,7 @@ typedef $$TopicsTableCreateCompanionBuilder =
       Value<int> id,
       required String name,
       Value<String> colorKey,
+      Value<String> iconKey,
       required int createdAt,
     });
 typedef $$TopicsTableUpdateCompanionBuilder =
@@ -1363,6 +1418,7 @@ typedef $$TopicsTableUpdateCompanionBuilder =
       Value<int> id,
       Value<String> name,
       Value<String> colorKey,
+      Value<String> iconKey,
       Value<int> createdAt,
     });
 
@@ -1411,6 +1467,11 @@ class $$TopicsTableFilterComposer
 
   ColumnFilters<String> get colorKey => $composableBuilder(
     column: $table.colorKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get iconKey => $composableBuilder(
+    column: $table.iconKey,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1469,6 +1530,11 @@ class $$TopicsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get iconKey => $composableBuilder(
+    column: $table.iconKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
@@ -1492,6 +1558,9 @@ class $$TopicsTableAnnotationComposer
 
   GeneratedColumn<String> get colorKey =>
       $composableBuilder(column: $table.colorKey, builder: (column) => column);
+
+  GeneratedColumn<String> get iconKey =>
+      $composableBuilder(column: $table.iconKey, builder: (column) => column);
 
   GeneratedColumn<int> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
@@ -1553,11 +1622,13 @@ class $$TopicsTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
                 Value<String> colorKey = const Value.absent(),
+                Value<String> iconKey = const Value.absent(),
                 Value<int> createdAt = const Value.absent(),
               }) => TopicsCompanion(
                 id: id,
                 name: name,
                 colorKey: colorKey,
+                iconKey: iconKey,
                 createdAt: createdAt,
               ),
           createCompanionCallback:
@@ -1565,11 +1636,13 @@ class $$TopicsTableTableManager
                 Value<int> id = const Value.absent(),
                 required String name,
                 Value<String> colorKey = const Value.absent(),
+                Value<String> iconKey = const Value.absent(),
                 required int createdAt,
               }) => TopicsCompanion.insert(
                 id: id,
                 name: name,
                 colorKey: colorKey,
+                iconKey: iconKey,
                 createdAt: createdAt,
               ),
           withReferenceMapper: (p0) => p0

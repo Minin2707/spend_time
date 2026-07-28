@@ -7,6 +7,8 @@ abstract final class AppRoutes {
 
   static const String settings = '/settings';
 
+  static const String createTopic = '/topics/create';
+
   static const String sessionHistory = '/session-history/:topicId';
 
   static String sessionHistoryLocation(
