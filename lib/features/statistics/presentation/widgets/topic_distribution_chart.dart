@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:spend_time/features/statistics/domain/topic_distribution_item.dart';
-import 'package:spend_time/features/statistics/presentation/helpers/topic_distribution_palette.dart';
+import 'package:spend_time/features/statistics/presentation/helpers/topic_distribution_color_mapper.dart';
 
 class TopicDistributionChart extends StatelessWidget {
   const TopicDistributionChart({
@@ -19,6 +19,8 @@ class TopicDistributionChart extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
+    final Brightness brightness = Theme.of(context).brightness;
+
     return AspectRatio(
       aspectRatio: 1,
       child: PieChart(
@@ -28,8 +30,9 @@ class TopicDistributionChart extends StatelessWidget {
               PieChartSectionData(
                 value: items[index].totalTime.inMilliseconds.toDouble(),
                 title: '',
-                color: TopicDistributionPalette.colorFor(
-                  index,
+                color: TopicDistributionColorMapper.colorFor(
+                  item: items[index],
+                  brightness: brightness,
                 ),
               ),
           ],

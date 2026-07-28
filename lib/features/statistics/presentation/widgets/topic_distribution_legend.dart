@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spend_time/core/theme/app_spacing.dart';
 import 'package:spend_time/features/statistics/domain/topic_distribution_item.dart';
-import 'package:spend_time/features/statistics/presentation/helpers/topic_distribution_palette.dart';
+import 'package:spend_time/features/statistics/presentation/helpers/topic_distribution_color_mapper.dart';
 import 'package:spend_time/features/statistics/presentation/helpers/topic_distribution_percentage_calculator.dart';
 
 class TopicDistributionLegend extends StatelessWidget {
@@ -20,6 +20,8 @@ class TopicDistributionLegend extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
+    final Brightness brightness = Theme.of(context).brightness;
+
     return Wrap(
       spacing: AppSpacing.md,
       runSpacing: AppSpacing.sm,
@@ -31,8 +33,9 @@ class TopicDistributionLegend extends StatelessWidget {
               items: items,
               index: index,
             ),
-            color: TopicDistributionPalette.colorFor(
-              index,
+            color: TopicDistributionColorMapper.colorFor(
+              item: items[index],
+              brightness: brightness,
             ),
           ),
       ],

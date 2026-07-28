@@ -4,6 +4,7 @@ import 'package:spend_time/features/statistics/data/statistics_repository.dart';
 import 'package:spend_time/features/statistics/domain/statistics_period.dart';
 import 'package:spend_time/features/statistics/domain/statistics_summary.dart';
 import 'package:spend_time/features/statistics/domain/topic_distribution_item.dart';
+import 'package:spend_time/features/topics/domain/topic_color_key.dart';
 
 class StatisticsRepositoryImpl implements StatisticsRepository {
   StatisticsRepositoryImpl({
@@ -62,6 +63,9 @@ class StatisticsRepositoryImpl implements StatisticsRepository {
           (item) => TopicDistributionItem(
             topicId: item.topicId,
             topicName: item.topicName,
+            colorKey: TopicColorKey.fromStorageValue(
+              item.colorKey,
+            ),
             totalTime: Duration(
               milliseconds: item.totalMillis,
             ),

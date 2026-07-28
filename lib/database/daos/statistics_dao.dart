@@ -67,6 +67,7 @@ class StatisticsDao extends DatabaseAccessor<AppDatabase> {
     SELECT
       topics.id AS topic_id,
       topics.name AS topic_name,
+      topics.color_key AS color_key,
       SUM(sessions.ended_at - sessions.started_at) AS total_millis
     FROM sessions
     INNER JOIN topics
@@ -76,7 +77,8 @@ class StatisticsDao extends DatabaseAccessor<AppDatabase> {
       AND sessions.started_at < ?
     GROUP BY
       topics.id,
-      topics.name
+      topics.name,
+      topics.color_key
     ORDER BY
       total_millis DESC
     ''',
@@ -98,6 +100,9 @@ class StatisticsDao extends DatabaseAccessor<AppDatabase> {
             ),
             topicName: row.read<String>(
               'topic_name',
+            ),
+            colorKey: row.read<String>(
+              'color_key',
             ),
             totalMillis: row.read<int>(
               'total_millis',
@@ -129,12 +134,15 @@ class TopicDistributionData {
   const TopicDistributionData({
     required this.topicId,
     required this.topicName,
+    required this.colorKey,
     required this.totalMillis,
   });
 
   final int topicId;
 
   final String topicName;
+
+  final String colorKey;
 
   final int totalMillis;
 }

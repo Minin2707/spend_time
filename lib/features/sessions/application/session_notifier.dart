@@ -4,9 +4,12 @@ import 'package:spend_time/core/time/clock.dart';
 import 'package:spend_time/core/time/clock_provider.dart';
 import 'package:spend_time/core/time/ticker.dart';
 import 'package:spend_time/core/time/ticker_provider.dart';
+import 'package:spend_time/features/sessions/application/session_history_provider.dart';
 import 'package:spend_time/features/sessions/application/session_state.dart';
 import 'package:spend_time/features/sessions/data/session_repository.dart';
 import 'package:spend_time/features/sessions/data/session_repository_provider.dart';
+import 'package:spend_time/features/statistics/application/statistics_provider.dart';
+import 'package:spend_time/features/statistics/domain/statistics_period.dart';
 import 'package:spend_time/features/topics/application/topic_statistics_provider.dart';
 
 class SessionNotifier extends AsyncNotifier<SessionState> {
@@ -114,13 +117,40 @@ class SessionNotifier extends AsyncNotifier<SessionState> {
       await _tickerSubscription?.cancel();
       _tickerSubscription = null;
 
-      ref.invalidate(
-        topicStatisticsProvider(
-          session.topicId,
-        ),
+      _invalidateCompletedSessionReadModels(
+        session.topicId,
       );
 
       return const SessionState();
     });
+  }
+
+  void _invalidateCompletedSessionReadModels(
+    int topicId,
+  ) {
+    ref.invalidate(
+      topicStatisticsProvider(
+        topicId,
+      ),
+    );
+    ref.invalidate(
+      sessionHistoryProvider(
+        topicId,
+      ),
+    );
+
+    for (final StatisticsPeriod period in StatisticsPeriod.values) {
+      ref
+        ..invalidate(
+          statisticsProvider(
+            period,
+          ),
+        )
+        ..invalidate(
+          topicDistributionProvider(
+            period,
+          ),
+        );
+    }
   }
 }
