@@ -14,14 +14,18 @@ class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
       super.database,
       );
 
-  Future<User?> getUser() {
-    return select(users).getSingleOrNull();
+  Future<User?> getUser() async {
+    final User? user = await select(users).getSingleOrNull();
+
+    return user;
   }
 
   Future<int> insertUser(
-      final UsersCompanion user,
-      ) {
-    return into(users).insert(user);
+    final UsersCompanion user,
+  ) async {
+    final int id = await into(users).insert(user);
+
+    return id;
   }
 
   Future<bool> updateUser(
@@ -30,7 +34,9 @@ class UserDao extends DatabaseAccessor<AppDatabase> with _$UserDaoMixin {
     return update(users).replace(user);
   }
 
-  Future<int> deleteAllUsers() {
-    return delete(users).go();
+  Future<int> deleteAllUsers() async {
+    final int count = await delete(users).go();
+
+    return count;
   }
 }

@@ -5,6 +5,7 @@ import 'package:spend_time/core/localization/l10n.dart';
 import 'package:spend_time/core/router/app_routes.dart';
 import 'package:spend_time/core/widgets/app_button.dart';
 import 'package:spend_time/core/widgets/app_text_field.dart';
+import 'package:spend_time/database/app_database.dart';
 import 'package:spend_time/features/onboarding/application/onboarding_provider.dart';
 
 
@@ -33,17 +34,6 @@ class _OnboardingScreenState
 
   @override
   Widget build(final BuildContext context) {
-    ref.listen(
-      onboardingProvider,
-          (_, next) {
-        next.whenData((user) {
-          if (user != null) {
-            context.go(AppRoutes.home);
-          }
-        });
-      },
-    );
-
     final AsyncValue state = ref.watch(onboardingProvider);
 
     return Scaffold(
@@ -70,23 +60,47 @@ class _OnboardingScreenState
             AppButton(
               text: context.l10n.continueButton,
               isLoading: state.isLoading,
-              onPressed: () async {
-                final String name = _controller.text.trim();
-
-                if (name.isEmpty) {
-                  return;
-                }
-
-                await ref.read(
-                  onboardingProvider.notifier,
-                ).saveUser(
-                  name: name,
-                );
-              },
+              onPressed: () => _submit(
+                context,
+              ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _submit(
+    BuildContext context,
+  ) async {
+    final String name = _controller.text.trim();
+
+    if (name.isEmpty) {
+      return;
+    }
+
+    await ref.read(
+      onboardingProvider.notifier,
+    ).saveUser(
+      name: name,
+    );
+
+    final AsyncValue<User?> onboardingState = ref.read(
+      onboardingProvider,
+    );
+
+    if (!context.mounted) {
+      return;
+    }
+
+    final User? user = onboardingState.valueOrNull;
+
+    if (user == null) {
+      return;
+    }
+
+    context.go(
+      AppRoutes.home,
     );
   }
 }

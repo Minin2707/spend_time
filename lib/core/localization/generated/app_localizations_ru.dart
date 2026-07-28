@@ -100,4 +100,32 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get updateTopicErrorMessage => 'Не удалось обновить тему.';
+
+  @override
+  String get themeModeLight => 'Светлая';
+
+  @override
+  String get themeModeDark => 'Тёмная';
+
+  @override
+  String get settingsTitle => 'Настройки';
+
+  @override
+  String get appearanceSectionTitle => 'Внешний вид';
+
+  @override
+  String get updateThemeErrorMessage => 'Не удалось обновить тему оформления.';
+
+  @override
+  String get noStatisticsDistributionTitle => 'Распределения пока нет';
+
+  @override
+  String get noStatisticsDistributionSubtitle =>
+      'Завершённые сессии появятся здесь.';
+
+  @override
+  String get loadingTitle => 'Загрузка...';
+
+  @override
+  String get errorTitle => 'Что-то пошло не так';
 }

@@ -11,15 +11,19 @@ class OnboardingRepositoryImpl implements OnboardingRepository {
   final UserDao _userDao;
 
   @override
-  Future<User?> getUser() {
-    return _userDao.getUser();
+  Future<User?> getUser() async {
+    final User? user = await _userDao.getUser();
+
+    return user;
   }
 
   @override
   Future<void> saveUser({
     required final String name,
-  }) {
-    return _userDao.insertUser(
+  }) async {
+    await _userDao.deleteAllUsers();
+
+    await _userDao.insertUser(
       UsersCompanion.insert(
         name: name,
         onboardingCompleted: const Value(true),

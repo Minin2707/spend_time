@@ -1,7 +1,9 @@
+import 'package:drift/drift.dart';
 import 'package:spend_time/database/app_database.dart';
 import 'package:spend_time/database/daos/topic_dao.dart';
 import 'package:spend_time/features/topics/data/topic_repository.dart';
 import 'package:spend_time/features/topics/data/topic_update_exception.dart';
+import 'package:spend_time/features/topics/domain/topic_color_key.dart';
 
 class TopicRepositoryImpl implements TopicRepository {
   const TopicRepositoryImpl(
@@ -18,23 +20,29 @@ class TopicRepositoryImpl implements TopicRepository {
   @override
   Future<void> createTopic({
     required String name,
+    required TopicColorKey colorKey,
   }) async {
-    await _topicDao.insertTopic(
+    await _topicDao.createTopic(
       TopicsCompanion.insert(
         name: name,
         createdAt: DateTime.now().millisecondsSinceEpoch,
+        colorKey: Value(
+          colorKey.storageValue,
+        ),
       ),
     );
   }
 
   @override
-  Future<void> renameTopic({
+  Future<void> updateTopic({
     required int id,
     required String name,
+    required TopicColorKey colorKey,
   }) async {
-    final bool updated = await _topicDao.renameTopic(
+    final bool updated = await _topicDao.updateTopic(
       id: id,
       name: name,
+      colorKey: colorKey.storageValue,
     );
 
     if (!updated) {

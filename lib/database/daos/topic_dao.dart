@@ -25,15 +25,16 @@ class TopicDao extends DatabaseAccessor<AppDatabase>
         .get();
   }
 
-  Future<int> insertTopic(
+  Future<int> createTopic(
       final TopicsCompanion topic,
       ) {
     return into(topics).insert(topic);
   }
 
-  Future<bool> renameTopic({
+  Future<bool> updateTopic({
     required int id,
     required String name,
+    required String colorKey,
   }) async {
     final int updatedRows = await (update(topics)
       ..where(
@@ -43,6 +44,9 @@ class TopicDao extends DatabaseAccessor<AppDatabase>
       TopicsCompanion(
         name: Value(
           name,
+        ),
+        colorKey: Value(
+          colorKey,
         ),
       ),
     );

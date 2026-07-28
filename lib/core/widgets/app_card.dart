@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spend_time/core/theme/app_colors.dart';
 import 'package:spend_time/core/theme/app_radius.dart';
 import 'package:spend_time/core/theme/app_spacing.dart';
 
@@ -19,10 +18,11 @@ class AppCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
     final Widget content = Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: theme.cardTheme.color ?? theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(
           AppRadius.large,
         ),

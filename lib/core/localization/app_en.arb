@@ -53,5 +53,14 @@
   "editTopicSaveButton": "Save",
   "editTopicMenuItem": "Edit",
   "emptyTopicNameMessage": "Topic name cannot be empty.",
-  "updateTopicErrorMessage": "Could not update topic."
+  "updateTopicErrorMessage": "Could not update topic.",
+  "themeModeLight": "Light",
+  "themeModeDark": "Dark",
+  "settingsTitle": "Settings",
+  "appearanceSectionTitle": "Appearance",
+  "updateThemeErrorMessage": "Could not update theme.",
+  "noStatisticsDistributionTitle": "No distribution yet",
+  "noStatisticsDistributionSubtitle": "Completed sessions will appear here.",
+  "loadingTitle": "Loading...",
+  "errorTitle": "Something went wrong"
 }

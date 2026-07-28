@@ -5,5 +5,11 @@ class Topics extends Table {
 
   TextColumn get name => text()();
 
+  TextColumn get colorKey => text().withDefault(
+    const Constant<String>(
+      'blue',
+    ),
+  )();
+
   IntColumn get createdAt => integer()();
 }

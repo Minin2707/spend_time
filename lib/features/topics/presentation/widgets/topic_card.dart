@@ -7,7 +7,9 @@ import 'package:spend_time/core/widgets/app_button.dart';
 import 'package:spend_time/core/widgets/app_card.dart';
 import 'package:spend_time/database/app_database.dart';
 import 'package:spend_time/features/topics/application/topic_statistics_provider.dart';
+import 'package:spend_time/features/topics/domain/topic_color_key.dart';
 import 'package:spend_time/features/topics/domain/topic_statistics.dart';
+import 'package:spend_time/features/topics/presentation/theme/topic_color_palette.dart';
 
 class TopicCard extends ConsumerWidget {
   const TopicCard({
@@ -45,6 +47,14 @@ class TopicCard extends ConsumerWidget {
 
     final TopicStatistics topicStatistics =
         statistics.value ?? TopicStatistics.empty;
+    final TopicColorKey topicColorKey =
+        TopicColorKey.fromStorageValue(
+      topic.colorKey,
+    );
+    final Color topicColor = TopicColorPalette.colorFor(
+      colorKey: topicColorKey,
+      brightness: Theme.of(context).brightness,
+    );
 
     return AppCard(
       onTap: onTap,
@@ -57,6 +67,17 @@ class TopicCard extends ConsumerWidget {
           children: [
             Row(
               children: [
+                Container(
+                  width: 10,
+                  height: 10,
+                  decoration: BoxDecoration(
+                    color: topicColor,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(
+                  width: AppSpacing.sm,
+                ),
                 Expanded(
                   child: Text(
                     topic.name,

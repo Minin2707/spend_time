@@ -38,7 +38,7 @@ class SessionHistoryScreen extends ConsumerWidget {
         data: (groups) {
           if (groups.isEmpty) {
             return AppEmptyView(
-              icon: Icons.history,
+              icon: Icons.history_rounded,
               title: context.l10n.noSessionHistoryTitle,
               subtitle: context.l10n.noSessionHistorySubtitle,
             );

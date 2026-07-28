@@ -3,6 +3,196 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
+class $AppSettingsTable extends AppSettings
+    with TableInfo<$AppSettingsTable, AppSetting> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AppSettingsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant<int>(1),
+  );
+  static const VerificationMeta _themeModeMeta = const VerificationMeta(
+    'themeMode',
+  );
+  @override
+  late final GeneratedColumn<String> themeMode = GeneratedColumn<String>(
+    'theme_mode',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant<String>('light'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, themeMode];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'app_settings';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AppSetting> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('theme_mode')) {
+      context.handle(
+        _themeModeMeta,
+        themeMode.isAcceptableOrUnknown(data['theme_mode']!, _themeModeMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AppSetting map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AppSetting(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      themeMode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}theme_mode'],
+      )!,
+    );
+  }
+
+  @override
+  $AppSettingsTable createAlias(String alias) {
+    return $AppSettingsTable(attachedDatabase, alias);
+  }
+}
+
+class AppSetting extends DataClass implements Insertable<AppSetting> {
+  final int id;
+  final String themeMode;
+  const AppSetting({required this.id, required this.themeMode});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['theme_mode'] = Variable<String>(themeMode);
+    return map;
+  }
+
+  AppSettingsCompanion toCompanion(bool nullToAbsent) {
+    return AppSettingsCompanion(id: Value(id), themeMode: Value(themeMode));
+  }
+
+  factory AppSetting.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AppSetting(
+      id: serializer.fromJson<int>(json['id']),
+      themeMode: serializer.fromJson<String>(json['themeMode']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'themeMode': serializer.toJson<String>(themeMode),
+    };
+  }
+
+  AppSetting copyWith({int? id, String? themeMode}) =>
+      AppSetting(id: id ?? this.id, themeMode: themeMode ?? this.themeMode);
+  AppSetting copyWithCompanion(AppSettingsCompanion data) {
+    return AppSetting(
+      id: data.id.present ? data.id.value : this.id,
+      themeMode: data.themeMode.present ? data.themeMode.value : this.themeMode,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AppSetting(')
+          ..write('id: $id, ')
+          ..write('themeMode: $themeMode')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, themeMode);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppSetting &&
+          other.id == this.id &&
+          other.themeMode == this.themeMode);
+}
+
+class AppSettingsCompanion extends UpdateCompanion<AppSetting> {
+  final Value<int> id;
+  final Value<String> themeMode;
+  const AppSettingsCompanion({
+    this.id = const Value.absent(),
+    this.themeMode = const Value.absent(),
+  });
+  AppSettingsCompanion.insert({
+    this.id = const Value.absent(),
+    this.themeMode = const Value.absent(),
+  });
+  static Insertable<AppSetting> custom({
+    Expression<int>? id,
+    Expression<String>? themeMode,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (themeMode != null) 'theme_mode': themeMode,
+    });
+  }
+
+  AppSettingsCompanion copyWith({Value<int>? id, Value<String>? themeMode}) {
+    return AppSettingsCompanion(
+      id: id ?? this.id,
+      themeMode: themeMode ?? this.themeMode,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (themeMode.present) {
+      map['theme_mode'] = Variable<String>(themeMode.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AppSettingsCompanion(')
+          ..write('id: $id, ')
+          ..write('themeMode: $themeMode')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $UsersTable extends Users with TableInfo<$UsersTable, User> {
   @override
   final GeneratedDatabase attachedDatabase;
@@ -289,6 +479,18 @@ class $TopicsTable extends Topics with TableInfo<$TopicsTable, Topic> {
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _colorKeyMeta = const VerificationMeta(
+    'colorKey',
+  );
+  @override
+  late final GeneratedColumn<String> colorKey = GeneratedColumn<String>(
+    'color_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant<String>('blue'),
+  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -301,7 +503,7 @@ class $TopicsTable extends Topics with TableInfo<$TopicsTable, Topic> {
     requiredDuringInsert: true,
   );
   @override
-  List<GeneratedColumn> get $columns => [id, name, createdAt];
+  List<GeneratedColumn> get $columns => [id, name, colorKey, createdAt];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -324,6 +526,12 @@ class $TopicsTable extends Topics with TableInfo<$TopicsTable, Topic> {
       );
     } else if (isInserting) {
       context.missing(_nameMeta);
+    }
+    if (data.containsKey('color_key')) {
+      context.handle(
+        _colorKeyMeta,
+        colorKey.isAcceptableOrUnknown(data['color_key']!, _colorKeyMeta),
+      );
     }
     if (data.containsKey('created_at')) {
       context.handle(
@@ -350,6 +558,10 @@ class $TopicsTable extends Topics with TableInfo<$TopicsTable, Topic> {
         DriftSqlType.string,
         data['${effectivePrefix}name'],
       )!,
+      colorKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}color_key'],
+      )!,
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}created_at'],
@@ -366,13 +578,20 @@ class $TopicsTable extends Topics with TableInfo<$TopicsTable, Topic> {
 class Topic extends DataClass implements Insertable<Topic> {
   final int id;
   final String name;
+  final String colorKey;
   final int createdAt;
-  const Topic({required this.id, required this.name, required this.createdAt});
+  const Topic({
+    required this.id,
+    required this.name,
+    required this.colorKey,
+    required this.createdAt,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
+    map['color_key'] = Variable<String>(colorKey);
     map['created_at'] = Variable<int>(createdAt);
     return map;
   }
@@ -381,6 +600,7 @@ class Topic extends DataClass implements Insertable<Topic> {
     return TopicsCompanion(
       id: Value(id),
       name: Value(name),
+      colorKey: Value(colorKey),
       createdAt: Value(createdAt),
     );
   }
@@ -393,6 +613,7 @@ class Topic extends DataClass implements Insertable<Topic> {
     return Topic(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      colorKey: serializer.fromJson<String>(json['colorKey']),
       createdAt: serializer.fromJson<int>(json['createdAt']),
     );
   }
@@ -402,19 +623,23 @@ class Topic extends DataClass implements Insertable<Topic> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
+      'colorKey': serializer.toJson<String>(colorKey),
       'createdAt': serializer.toJson<int>(createdAt),
     };
   }
 
-  Topic copyWith({int? id, String? name, int? createdAt}) => Topic(
-    id: id ?? this.id,
-    name: name ?? this.name,
-    createdAt: createdAt ?? this.createdAt,
-  );
+  Topic copyWith({int? id, String? name, String? colorKey, int? createdAt}) =>
+      Topic(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        colorKey: colorKey ?? this.colorKey,
+        createdAt: createdAt ?? this.createdAt,
+      );
   Topic copyWithCompanion(TopicsCompanion data) {
     return Topic(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
+      colorKey: data.colorKey.present ? data.colorKey.value : this.colorKey,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
     );
   }
@@ -424,45 +649,52 @@ class Topic extends DataClass implements Insertable<Topic> {
     return (StringBuffer('Topic(')
           ..write('id: $id, ')
           ..write('name: $name, ')
+          ..write('colorKey: $colorKey, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, createdAt);
+  int get hashCode => Object.hash(id, name, colorKey, createdAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Topic &&
           other.id == this.id &&
           other.name == this.name &&
+          other.colorKey == this.colorKey &&
           other.createdAt == this.createdAt);
 }
 
 class TopicsCompanion extends UpdateCompanion<Topic> {
   final Value<int> id;
   final Value<String> name;
+  final Value<String> colorKey;
   final Value<int> createdAt;
   const TopicsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.colorKey = const Value.absent(),
     this.createdAt = const Value.absent(),
   });
   TopicsCompanion.insert({
     this.id = const Value.absent(),
     required String name,
+    this.colorKey = const Value.absent(),
     required int createdAt,
   }) : name = Value(name),
        createdAt = Value(createdAt);
   static Insertable<Topic> custom({
     Expression<int>? id,
     Expression<String>? name,
+    Expression<String>? colorKey,
     Expression<int>? createdAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
+      if (colorKey != null) 'color_key': colorKey,
       if (createdAt != null) 'created_at': createdAt,
     });
   }
@@ -470,11 +702,13 @@ class TopicsCompanion extends UpdateCompanion<Topic> {
   TopicsCompanion copyWith({
     Value<int>? id,
     Value<String>? name,
+    Value<String>? colorKey,
     Value<int>? createdAt,
   }) {
     return TopicsCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
+      colorKey: colorKey ?? this.colorKey,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -488,6 +722,9 @@ class TopicsCompanion extends UpdateCompanion<Topic> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
+    if (colorKey.present) {
+      map['color_key'] = Variable<String>(colorKey.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<int>(createdAt.value);
     }
@@ -499,6 +736,7 @@ class TopicsCompanion extends UpdateCompanion<Topic> {
     return (StringBuffer('TopicsCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
+          ..write('colorKey: $colorKey, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
@@ -811,6 +1049,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
+  late final $AppSettingsTable appSettings = $AppSettingsTable(this);
   late final $UsersTable users = $UsersTable(this);
   late final $TopicsTable topics = $TopicsTable(this);
   late final $SessionsTable sessions = $SessionsTable(this);
@@ -818,7 +1057,12 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [users, topics, sessions];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    appSettings,
+    users,
+    topics,
+    sessions,
+  ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
     WritePropagation(
@@ -831,6 +1075,131 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   ]);
 }
 
+typedef $$AppSettingsTableCreateCompanionBuilder =
+    AppSettingsCompanion Function({Value<int> id, Value<String> themeMode});
+typedef $$AppSettingsTableUpdateCompanionBuilder =
+    AppSettingsCompanion Function({Value<int> id, Value<String> themeMode});
+
+class $$AppSettingsTableFilterComposer
+    extends Composer<_$AppDatabase, $AppSettingsTable> {
+  $$AppSettingsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get themeMode => $composableBuilder(
+    column: $table.themeMode,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$AppSettingsTableOrderingComposer
+    extends Composer<_$AppDatabase, $AppSettingsTable> {
+  $$AppSettingsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get themeMode => $composableBuilder(
+    column: $table.themeMode,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$AppSettingsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $AppSettingsTable> {
+  $$AppSettingsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get themeMode =>
+      $composableBuilder(column: $table.themeMode, builder: (column) => column);
+}
+
+class $$AppSettingsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $AppSettingsTable,
+          AppSetting,
+          $$AppSettingsTableFilterComposer,
+          $$AppSettingsTableOrderingComposer,
+          $$AppSettingsTableAnnotationComposer,
+          $$AppSettingsTableCreateCompanionBuilder,
+          $$AppSettingsTableUpdateCompanionBuilder,
+          (
+            AppSetting,
+            BaseReferences<_$AppDatabase, $AppSettingsTable, AppSetting>,
+          ),
+          AppSetting,
+          PrefetchHooks Function()
+        > {
+  $$AppSettingsTableTableManager(_$AppDatabase db, $AppSettingsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AppSettingsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$AppSettingsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$AppSettingsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> themeMode = const Value.absent(),
+              }) => AppSettingsCompanion(id: id, themeMode: themeMode),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> themeMode = const Value.absent(),
+              }) => AppSettingsCompanion.insert(id: id, themeMode: themeMode),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$AppSettingsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $AppSettingsTable,
+      AppSetting,
+      $$AppSettingsTableFilterComposer,
+      $$AppSettingsTableOrderingComposer,
+      $$AppSettingsTableAnnotationComposer,
+      $$AppSettingsTableCreateCompanionBuilder,
+      $$AppSettingsTableUpdateCompanionBuilder,
+      (
+        AppSetting,
+        BaseReferences<_$AppDatabase, $AppSettingsTable, AppSetting>,
+      ),
+      AppSetting,
+      PrefetchHooks Function()
+    >;
 typedef $$UsersTableCreateCompanionBuilder =
     UsersCompanion Function({
       Value<int> id,
@@ -986,12 +1355,14 @@ typedef $$TopicsTableCreateCompanionBuilder =
     TopicsCompanion Function({
       Value<int> id,
       required String name,
+      Value<String> colorKey,
       required int createdAt,
     });
 typedef $$TopicsTableUpdateCompanionBuilder =
     TopicsCompanion Function({
       Value<int> id,
       Value<String> name,
+      Value<String> colorKey,
       Value<int> createdAt,
     });
 
@@ -1035,6 +1406,11 @@ class $$TopicsTableFilterComposer
 
   ColumnFilters<String> get name => $composableBuilder(
     column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get colorKey => $composableBuilder(
+    column: $table.colorKey,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1088,6 +1464,11 @@ class $$TopicsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get colorKey => $composableBuilder(
+    column: $table.colorKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
@@ -1108,6 +1489,9 @@ class $$TopicsTableAnnotationComposer
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get colorKey =>
+      $composableBuilder(column: $table.colorKey, builder: (column) => column);
 
   GeneratedColumn<int> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
@@ -1168,16 +1552,24 @@ class $$TopicsTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
+                Value<String> colorKey = const Value.absent(),
                 Value<int> createdAt = const Value.absent(),
-              }) => TopicsCompanion(id: id, name: name, createdAt: createdAt),
+              }) => TopicsCompanion(
+                id: id,
+                name: name,
+                colorKey: colorKey,
+                createdAt: createdAt,
+              ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String name,
+                Value<String> colorKey = const Value.absent(),
                 required int createdAt,
               }) => TopicsCompanion.insert(
                 id: id,
                 name: name,
+                colorKey: colorKey,
                 createdAt: createdAt,
               ),
           withReferenceMapper: (p0) => p0
@@ -1523,6 +1915,8 @@ typedef $$SessionsTableProcessedTableManager =
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
+  $$AppSettingsTableTableManager get appSettings =>
+      $$AppSettingsTableTableManager(_db, _db.appSettings);
   $$UsersTableTableManager get users =>
       $$UsersTableTableManager(_db, _db.users);
   $$TopicsTableTableManager get topics =>

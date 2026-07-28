@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:spend_time/core/localization/l10n.dart';
 import 'package:spend_time/core/router/app_routes.dart';
 import 'package:spend_time/core/theme/app_spacing.dart';
-import 'package:spend_time/core/widgets/app_empty_view.dart';
 import 'package:spend_time/core/widgets/app_error_view.dart';
 import 'package:spend_time/core/widgets/app_loading_view.dart';
 import 'package:spend_time/features/sessions/application/session_provider.dart';
@@ -12,9 +11,13 @@ import 'package:spend_time/features/topics/application/active_topic_deletion_exc
 import 'package:spend_time/features/topics/application/empty_topic_name_exception.dart';
 import 'package:spend_time/features/topics/application/topics_notifier.dart';
 import 'package:spend_time/features/topics/data/topic_update_exception.dart';
+import 'package:spend_time/features/topics/domain/topic_color_key.dart';
 import 'package:spend_time/features/topics/presentation/dialogs/create_topic_dialog.dart';
+import 'package:spend_time/features/topics/presentation/dialogs/create_topic_result.dart';
 import 'package:spend_time/features/topics/presentation/dialogs/delete_topic_dialog.dart';
 import 'package:spend_time/features/topics/presentation/dialogs/edit_topic_dialog.dart';
+import 'package:spend_time/features/topics/presentation/dialogs/edit_topic_result.dart';
+import 'package:spend_time/features/topics/presentation/widgets/home_topics_empty_view.dart';
 import 'package:spend_time/features/topics/presentation/widgets/topic_card.dart';
 
 
@@ -55,15 +58,29 @@ class HomeScreen extends ConsumerWidget {
               );
             },
           ),
+          IconButton(
+            icon: const Icon(
+              Icons.settings_outlined,
+            ),
+            onPressed: () {
+              context.push(
+                AppRoutes.settings,
+              );
+            },
+          ),
         ],
       ),
       body: topics.when(
         data: (items) {
           if (items.isEmpty) {
-            return AppEmptyView(
-              icon: Icons.schedule,
+            return HomeTopicsEmptyView(
               title: context.l10n.noTopicsTitle,
               subtitle: context.l10n.noTopicsSubtitle,
+              buttonText: context.l10n.createTopic,
+              onCreateTopic: () => _showCreateTopicDialog(
+                context,
+                ref,
+              ),
             );
           }
 
@@ -107,23 +124,28 @@ class HomeScreen extends ConsumerWidget {
                   );
                 },
                 onEdit: () async {
-                  final String? newName = await showDialog<String>(
+                  final EditTopicResult? result =
+                  await showDialog<EditTopicResult>(
                     context: context,
                     builder: (_) => EditTopicDialog(
                       initialName: topic.name,
+                      initialColor: TopicColorKey.fromStorageValue(
+                        topic.colorKey,
+                      ),
                     ),
                   );
 
-                  if (newName == null) {
+                  if (result == null) {
                     return;
                   }
 
                   try {
                     await ref.read(
                       topicsProvider.notifier,
-                    ).renameTopic(
+                    ).updateTopic(
                       id: topic.id,
-                      name: newName,
+                      name: result.name,
+                      colorKey: result.colorKey,
                     );
                   } on EmptyTopicNameException {
                     if (!context.mounted) {
@@ -193,26 +215,36 @@ class HomeScreen extends ConsumerWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final String? name = await showDialog<String>(
-            context: context,
-            builder: (_) => const CreateTopicDialog(),
-          );
-
-          if (name == null) {
-            return;
-          }
-
-          await ref.read(
-            topicsProvider.notifier,
-          ).createTopic(
-            name: name,
-          );
-        },
+        onPressed: () => _showCreateTopicDialog(
+          context,
+          ref,
+        ),
         child: const Icon(
           Icons.add,
         ),
       ),
+    );
+  }
+
+  Future<void> _showCreateTopicDialog(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    final CreateTopicResult? result =
+    await showDialog<CreateTopicResult>(
+      context: context,
+      builder: (_) => const CreateTopicDialog(),
+    );
+
+    if (result == null) {
+      return;
+    }
+
+    await ref.read(
+      topicsProvider.notifier,
+    ).createTopic(
+      name: result.name,
+      colorKey: result.colorKey,
     );
   }
 }

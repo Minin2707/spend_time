@@ -47,5 +47,14 @@
   "editTopicSaveButton": "Сохранить",
   "editTopicMenuItem": "Редактировать",
   "emptyTopicNameMessage": "Название темы не может быть пустым.",
-  "updateTopicErrorMessage": "Не удалось обновить тему."
+  "updateTopicErrorMessage": "Не удалось обновить тему.",
+  "themeModeLight": "Светлая",
+  "themeModeDark": "Тёмная",
+  "settingsTitle": "Настройки",
+  "appearanceSectionTitle": "Внешний вид",
+  "updateThemeErrorMessage": "Не удалось обновить тему оформления.",
+  "noStatisticsDistributionTitle": "Распределения пока нет",
+  "noStatisticsDistributionSubtitle": "Завершённые сессии появятся здесь.",
+  "loadingTitle": "Загрузка...",
+  "errorTitle": "Что-то пошло не так"
 }

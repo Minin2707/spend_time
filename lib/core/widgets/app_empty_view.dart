@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:spend_time/core/theme/app_spacing.dart';
-import 'package:spend_time/core/theme/app_text_styles.dart';
 
 class AppEmptyView extends StatelessWidget {
   const AppEmptyView({
@@ -14,8 +13,15 @@ class AppEmptyView extends StatelessWidget {
   final String title;
   final String subtitle;
 
+  static const double _visualSize = 96;
+  static const double _iconSize = 44;
+  static const double _maxTextWidth = 320;
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(
@@ -24,25 +30,49 @@ class AppEmptyView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              icon,
-              size: 72,
+            Container(
+              width: _visualSize,
+              height: _visualSize,
+              decoration: BoxDecoration(
+                color: colorScheme.primaryContainer,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                icon,
+                size: _iconSize,
+                color: colorScheme.onPrimaryContainer,
+              ),
             ),
             const SizedBox(
-              height: AppSpacing.lg,
+              height: AppSpacing.xl,
             ),
-            Text(
-              title,
-              style: AppTextStyles.title,
-              textAlign: TextAlign.center,
+            ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: _maxTextWidth,
+              ),
+              child: Text(
+                title,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  color: colorScheme.onSurface,
+                  fontWeight: FontWeight.w700,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
             const SizedBox(
               height: AppSpacing.sm,
             ),
-            Text(
-              subtitle,
-              style: AppTextStyles.body,
-              textAlign: TextAlign.center,
+            ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: _maxTextWidth,
+              ),
+              child: Text(
+                subtitle,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
           ],
         ),

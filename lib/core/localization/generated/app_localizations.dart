@@ -277,6 +277,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not update topic.'**
   String get updateTopicErrorMessage;
+
+  /// No description provided for @themeModeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeModeLight;
+
+  /// No description provided for @themeModeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeModeDark;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @appearanceSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearanceSectionTitle;
+
+  /// No description provided for @updateThemeErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not update theme.'**
+  String get updateThemeErrorMessage;
+
+  /// No description provided for @noStatisticsDistributionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No distribution yet'**
+  String get noStatisticsDistributionTitle;
+
+  /// No description provided for @noStatisticsDistributionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed sessions will appear here.'**
+  String get noStatisticsDistributionSubtitle;
+
+  /// No description provided for @loadingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get loadingTitle;
+
+  /// No description provided for @errorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get errorTitle;
 }
 
 class _AppLocalizationsDelegate

@@ -100,4 +100,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get updateTopicErrorMessage => 'Could not update topic.';
+
+  @override
+  String get themeModeLight => 'Light';
+
+  @override
+  String get themeModeDark => 'Dark';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get appearanceSectionTitle => 'Appearance';
+
+  @override
+  String get updateThemeErrorMessage => 'Could not update theme.';
+
+  @override
+  String get noStatisticsDistributionTitle => 'No distribution yet';
+
+  @override
+  String get noStatisticsDistributionSubtitle =>
+      'Completed sessions will appear here.';
+
+  @override
+  String get loadingTitle => 'Loading...';
+
+  @override
+  String get errorTitle => 'Something went wrong';
 }

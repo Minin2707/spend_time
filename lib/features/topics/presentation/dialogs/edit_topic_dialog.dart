@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:spend_time/core/localization/l10n.dart';
+import 'package:spend_time/core/theme/app_spacing.dart';
+import 'package:spend_time/features/topics/domain/topic_color_key.dart';
+import 'package:spend_time/features/topics/presentation/dialogs/edit_topic_result.dart';
+import 'package:spend_time/features/topics/presentation/widgets/topic_color_selector.dart';
 
 class EditTopicDialog extends StatefulWidget {
   const EditTopicDialog({
     super.key,
     required this.initialName,
+    required this.initialColor,
   });
 
   final String initialName;
+  final TopicColorKey initialColor;
 
   @override
   State<EditTopicDialog> createState() =>
@@ -16,6 +22,7 @@ class EditTopicDialog extends StatefulWidget {
 
 class _EditTopicDialogState extends State<EditTopicDialog> {
   late final TextEditingController _controller;
+  late TopicColorKey _selectedColor;
 
   bool _canSave = false;
 
@@ -26,6 +33,7 @@ class _EditTopicDialogState extends State<EditTopicDialog> {
     _controller = TextEditingController(
       text: widget.initialName,
     );
+    _selectedColor = widget.initialColor;
     _canSave = _controller.text.trim().isNotEmpty;
     _controller.addListener(
       _updateCanSave,
@@ -63,12 +71,29 @@ class _EditTopicDialogState extends State<EditTopicDialog> {
       title: Text(
         context.l10n.editTopicTitle,
       ),
-      content: TextField(
-        controller: _controller,
-        autofocus: true,
-        decoration: InputDecoration(
-          labelText: context.l10n.editTopicNameLabel,
-        ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          TextField(
+            controller: _controller,
+            autofocus: true,
+            decoration: InputDecoration(
+              labelText: context.l10n.editTopicNameLabel,
+            ),
+          ),
+          const SizedBox(
+            height: AppSpacing.lg,
+          ),
+          TopicColorSelector(
+            selectedColor: _selectedColor,
+            onChanged: (TopicColorKey colorKey) {
+              setState(() {
+                _selectedColor = colorKey;
+              });
+            },
+          ),
+        ],
       ),
       actions: [
         TextButton(
@@ -83,7 +108,10 @@ class _EditTopicDialogState extends State<EditTopicDialog> {
           onPressed: _canSave
               ? () {
                   Navigator.of(context).pop(
-                    _controller.text,
+                    EditTopicResult(
+                      name: _controller.text,
+                      colorKey: _selectedColor,
+                    ),
                   );
                 }
               : null,

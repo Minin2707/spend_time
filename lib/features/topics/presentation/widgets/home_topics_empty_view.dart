@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:spend_time/core/localization/l10n.dart';
+import 'package:spend_time/core/theme/app_radius.dart';
 import 'package:spend_time/core/theme/app_spacing.dart';
+import 'package:spend_time/core/widgets/app_button.dart';
 
-class AppErrorView extends StatelessWidget {
-  const AppErrorView({
+class HomeTopicsEmptyView extends StatelessWidget {
+  const HomeTopicsEmptyView({
     super.key,
-    required this.message,
+    required this.title,
+    required this.subtitle,
+    required this.buttonText,
+    required this.onCreateTopic,
   });
 
-  final String message;
+  final String title;
+  final String subtitle;
+  final String buttonText;
+  final VoidCallback onCreateTopic;
 
-  static const double _visualSize = 88;
-  static const double _iconSize = 40;
+  static const double _visualSize = 132;
+  static const double _iconSize = 56;
   static const double _maxTextWidth = 320;
+  static const double _maxButtonWidth = 280;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
@@ -31,13 +41,15 @@ class AppErrorView extends StatelessWidget {
               width: _visualSize,
               height: _visualSize,
               decoration: BoxDecoration(
-                color: colorScheme.errorContainer,
-                shape: BoxShape.circle,
+                color: colorScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(
+                  AppRadius.extraLarge,
+                ),
               ),
               child: Icon(
-                Icons.error_outline_rounded,
+                Icons.hourglass_empty_rounded,
                 size: _iconSize,
-                color: colorScheme.onErrorContainer,
+                color: colorScheme.onPrimaryContainer,
               ),
             ),
             const SizedBox(
@@ -48,7 +60,7 @@ class AppErrorView extends StatelessWidget {
                 maxWidth: _maxTextWidth,
               ),
               child: Text(
-                context.l10n.errorTitle,
+                title,
                 style: theme.textTheme.titleLarge?.copyWith(
                   color: colorScheme.onSurface,
                   fontWeight: FontWeight.w700,
@@ -64,11 +76,23 @@ class AppErrorView extends StatelessWidget {
                 maxWidth: _maxTextWidth,
               ),
               child: Text(
-                message,
+                subtitle,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),
                 textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(
+              height: AppSpacing.xl,
+            ),
+            ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: _maxButtonWidth,
+              ),
+              child: AppButton(
+                text: buttonText,
+                onPressed: onCreateTopic,
               ),
             ),
           ],

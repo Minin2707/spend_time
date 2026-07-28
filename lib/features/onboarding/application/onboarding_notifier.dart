@@ -20,8 +20,9 @@ class OnboardingNotifier extends AsyncNotifier<User?> {
 
     state = await AsyncValue.guard(() async {
       await _repository.saveUser(name: name);
+      final User? user = await _repository.getUser();
 
-      return _repository.getUser();
+      return user;
     });
   }
 }

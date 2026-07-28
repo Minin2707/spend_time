@@ -5,6 +5,7 @@ import 'package:spend_time/core/widgets/app_error_view.dart';
 import 'package:spend_time/core/widgets/app_loading_view.dart';
 import 'package:spend_time/features/statistics/application/statistics_provider.dart';
 import 'package:spend_time/features/statistics/domain/statistics_period.dart';
+import 'package:spend_time/features/statistics/presentation/widgets/statistics_distribution_empty_view.dart';
 import 'package:spend_time/features/statistics/presentation/widgets/statistics_period_selector.dart';
 import 'package:spend_time/features/statistics/presentation/widgets/statistics_summary_card.dart';
 import 'package:spend_time/features/statistics/presentation/widgets/topic_distribution_chart.dart';
@@ -69,10 +70,12 @@ class _StatisticsScreenState extends ConsumerState<StatisticsScreen> {
                     summary: summary,
                     period: _selectedPeriod,
                   ),
-                  if (items.isNotEmpty) ...[
-                    const SizedBox(
-                      height: AppSpacing.md,
-                    ),
+                  const SizedBox(
+                    height: AppSpacing.md,
+                  ),
+                  if (items.isEmpty)
+                    const StatisticsDistributionEmptyView()
+                  else ...[
                     TopicDistributionChart(
                       items: items,
                     ),

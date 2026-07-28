@@ -7,6 +7,7 @@ import 'package:spend_time/features/topics/application/active_topic_deletion_exc
 import 'package:spend_time/features/topics/application/empty_topic_name_exception.dart';
 import 'package:spend_time/features/topics/data/topic_repository.dart';
 import 'package:spend_time/features/topics/data/topic_repository_provider.dart';
+import 'package:spend_time/features/topics/domain/topic_color_key.dart';
 
 final topicsProvider =
 AsyncNotifierProvider<TopicsNotifier, List<Topic>>(
@@ -25,9 +26,11 @@ class TopicsNotifier extends AsyncNotifier<List<Topic>> {
 
   Future<void> createTopic({
     required String name,
+    required TopicColorKey colorKey,
   }) async {
     await _repository.createTopic(
       name: name,
+      colorKey: colorKey,
     );
 
     state = await AsyncValue.guard(
@@ -35,9 +38,10 @@ class TopicsNotifier extends AsyncNotifier<List<Topic>> {
     );
   }
 
-  Future<void> renameTopic({
+  Future<void> updateTopic({
     required int id,
     required String name,
+    required TopicColorKey colorKey,
   }) async {
     final String normalizedName = name.trim();
 
@@ -45,9 +49,10 @@ class TopicsNotifier extends AsyncNotifier<List<Topic>> {
       throw const EmptyTopicNameException();
     }
 
-    await _repository.renameTopic(
+    await _repository.updateTopic(
       id: id,
       name: normalizedName,
+      colorKey: colorKey,
     );
 
     for (final StatisticsPeriod period in StatisticsPeriod.values) {

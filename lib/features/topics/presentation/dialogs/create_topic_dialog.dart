@@ -3,6 +3,9 @@ import 'package:spend_time/core/localization/l10n.dart';
 import 'package:spend_time/core/theme/app_spacing.dart';
 import 'package:spend_time/core/widgets/app_button.dart';
 import 'package:spend_time/core/widgets/app_text_field.dart';
+import 'package:spend_time/features/topics/domain/topic_color_key.dart';
+import 'package:spend_time/features/topics/presentation/dialogs/create_topic_result.dart';
+import 'package:spend_time/features/topics/presentation/widgets/topic_color_selector.dart';
 
 class CreateTopicDialog extends StatefulWidget {
   const CreateTopicDialog({
@@ -18,6 +21,7 @@ class _CreateTopicDialogState
     extends State<CreateTopicDialog> {
   final TextEditingController _controller =
   TextEditingController();
+  TopicColorKey _selectedColor = TopicColorKey.blue;
 
   @override
   void dispose() {
@@ -46,6 +50,17 @@ class _CreateTopicDialogState
           const SizedBox(
             height: AppSpacing.lg,
           ),
+          TopicColorSelector(
+            selectedColor: _selectedColor,
+            onChanged: (TopicColorKey colorKey) {
+              setState(() {
+                _selectedColor = colorKey;
+              });
+            },
+          ),
+          const SizedBox(
+            height: AppSpacing.lg,
+          ),
           AppButton(
             text: context.l10n.createButton,
             onPressed: _submit,
@@ -67,12 +82,17 @@ class _CreateTopicDialogState
   }
 
   void _submit() {
-    final String name = _controller.text.trim();
+    final String name = _controller.text;
 
-    if (name.isEmpty) {
+    if (name.trim().isEmpty) {
       return;
     }
 
-    Navigator.of(context).pop(name);
+    Navigator.of(context).pop(
+      CreateTopicResult(
+        name: name,
+        colorKey: _selectedColor,
+      ),
+    );
   }
 }
