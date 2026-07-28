@@ -5,6 +5,7 @@ import 'package:spend_time/core/localization/l10n.dart';
 import 'package:spend_time/core/router/app_routes.dart';
 import 'package:spend_time/core/settings/application/language_settings_provider.dart';
 import 'package:spend_time/core/settings/presentation/widgets/language_selector.dart';
+import 'package:spend_time/core/theme/app_spacing.dart';
 import 'package:spend_time/core/widgets/app_button.dart';
 import 'package:spend_time/core/widgets/app_text_field.dart';
 import 'package:spend_time/database/app_database.dart';
@@ -40,76 +41,104 @@ class _OnboardingScreenState
     final languageSettings = ref.watch(
       languageSettingsProvider,
     );
+    final double keyboardInset = MediaQuery.viewInsetsOf(
+      context,
+    ).bottom;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           context.l10n.welcomeTitle,
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-             Text(
-              context.l10n.welcomeMessage,
-            ),
-            const SizedBox(height: 24),
-            Text(
-              context.l10n.languageSectionTitle,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 8),
-            languageSettings.when(
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
-              ),
-              error: (error, stackTrace) => Text(
-                context.l10n.updateLanguageErrorMessage,
-              ),
-              data: (language) => LanguageSelector(
-                selectedLanguage: language,
-                onChanged: (selectedLanguage) async {
-                  try {
-                    await ref
-                        .read(
-                          languageSettingsProvider.notifier,
-                        )
-                        .updateLanguage(
-                          language: selectedLanguage,
-                        );
-                  } catch (_) {
-                    if (!context.mounted) {
-                      return;
-                    }
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          context.l10n.updateLanguageErrorMessage,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(
+            AppSpacing.lg,
+          ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                padding: EdgeInsets.only(
+                  bottom: keyboardInset,
+                ),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight,
+                  ),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          context.l10n.welcomeMessage,
                         ),
-                      ),
-                    );
-                  }
-                },
-              ),
-            ),
-            const SizedBox(height: 24),
-            AppTextField(
-              controller: _controller,
-              labelText: context.l10n.nameLabel,
-              textInputAction: TextInputAction.done,
-            ),
-            const Spacer(),
-            AppButton(
-              text: context.l10n.continueButton,
-              isLoading: state.isLoading,
-              onPressed: () => _submit(
-                context,
-              ),
-            ),
-          ],
+                        const SizedBox(height: AppSpacing.lg),
+                        Text(
+                          context.l10n.languageSectionTitle,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: AppSpacing.sm),
+                        languageSettings.when(
+                          loading: () => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          error: (error, stackTrace) => Text(
+                            context.l10n.updateLanguageErrorMessage,
+                          ),
+                          data: (language) => LanguageSelector(
+                            selectedLanguage: language,
+                            onChanged: (selectedLanguage) async {
+                              try {
+                                await ref
+                                    .read(
+                                      languageSettingsProvider.notifier,
+                                    )
+                                    .updateLanguage(
+                                      language: selectedLanguage,
+                                    );
+                              } catch (_) {
+                                if (!context.mounted) {
+                                  return;
+                                }
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      context
+                                          .l10n
+                                          .updateLanguageErrorMessage,
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.lg),
+                        AppTextField(
+                          controller: _controller,
+                          labelText: context.l10n.nameLabel,
+                          textInputAction: TextInputAction.done,
+                        ),
+                        const Spacer(),
+                        AppButton(
+                          text: context.l10n.continueButton,
+                          isLoading: state.isLoading,
+                          onPressed: () => _submit(
+                            context,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

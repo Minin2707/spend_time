@@ -87,14 +87,20 @@ class _StatisticsSummaryRow extends StatelessWidget {
     BuildContext context,
   ) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Expanded(
           child: Text(
             label,
           ),
         ),
+        const SizedBox(
+          width: AppSpacing.md,
+        ),
         Text(
           value,
+          softWrap: false,
+          textAlign: TextAlign.end,
         ),
       ],
     );
