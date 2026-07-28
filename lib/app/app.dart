@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:spend_time/core/localization/app_language_ui_mapping.dart';
 import 'package:spend_time/core/localization/generated/app_localizations.dart';
 import 'package:spend_time/core/router/app_router.dart';
+import 'package:spend_time/core/settings/application/language_settings_provider.dart';
 import 'package:spend_time/core/settings/application/theme_settings_provider.dart';
 import 'package:spend_time/core/theme/app_theme.dart';
 import 'package:spend_time/core/theme/app_theme_mode_ui_mapping.dart';
@@ -23,6 +25,9 @@ class SpendTimeApp extends ConsumerWidget {
     final themeMode = ref.watch(
       themeSettingsProvider,
     ).valueOrNull?.toFlutterThemeMode() ?? ThemeMode.light;
+    final locale = ref.watch(
+      languageSettingsProvider,
+    ).valueOrNull?.toFlutterLocale();
 
     return MaterialApp.router(
       title: 'Spend Time',
@@ -30,8 +35,11 @@ class SpendTimeApp extends ConsumerWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: themeMode,
+      locale: locale,
 
-      routerConfig: AppRouter.router,
+      routerConfig: ref.watch(
+        appRouterProvider,
+      ),
 
       localizationsDelegates: const [
         AppLocalizations.delegate,

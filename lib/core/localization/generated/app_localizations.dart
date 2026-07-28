@@ -152,6 +152,24 @@ abstract class AppLocalizations {
   /// **'Create topic'**
   String get createTopic;
 
+  /// No description provided for @navigationTopics.
+  ///
+  /// In en, this message translates to:
+  /// **'Topics'**
+  String get navigationTopics;
+
+  /// No description provided for @navigationStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Statistics'**
+  String get navigationStatistics;
+
+  /// No description provided for @navigationSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get navigationSettings;
+
   /// No description provided for @createTopicTitle.
   ///
   /// In en, this message translates to:
@@ -296,6 +314,24 @@ abstract class AppLocalizations {
   /// **'Dark'**
   String get themeModeDark;
 
+  /// No description provided for @languageSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get languageSystem;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
+  /// No description provided for @languageRussian.
+  ///
+  /// In en, this message translates to:
+  /// **'Russian'**
+  String get languageRussian;
+
   /// No description provided for @settingsTitle.
   ///
   /// In en, this message translates to:
@@ -308,11 +344,23 @@ abstract class AppLocalizations {
   /// **'Appearance'**
   String get appearanceSectionTitle;
 
+  /// No description provided for @languageSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languageSectionTitle;
+
   /// No description provided for @updateThemeErrorMessage.
   ///
   /// In en, this message translates to:
   /// **'Could not update theme.'**
   String get updateThemeErrorMessage;
+
+  /// No description provided for @updateLanguageErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not change the language. Please try again.'**
+  String get updateLanguageErrorMessage;
 
   /// No description provided for @noStatisticsDistributionTitle.
   ///
@@ -325,6 +373,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Completed sessions will appear here.'**
   String get noStatisticsDistributionSubtitle;
+
+  /// No description provided for @statisticsPeriodToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get statisticsPeriodToday;
+
+  /// No description provided for @statisticsPeriodWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get statisticsPeriodWeek;
+
+  /// No description provided for @statisticsPeriodMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get statisticsPeriodMonth;
+
+  /// No description provided for @statisticsPeriodYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get statisticsPeriodYear;
+
+  /// No description provided for @statisticsPeriodAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get statisticsPeriodAll;
+
+  /// No description provided for @statisticsSummaryTotalTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Total time'**
+  String get statisticsSummaryTotalTime;
+
+  /// No description provided for @statisticsSummarySessionsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get statisticsSummarySessionsCount;
+
+  /// No description provided for @statisticsSummaryAverageSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Average session'**
+  String get statisticsSummaryAverageSession;
+
+  /// No description provided for @statisticsSummaryLongestSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Longest session'**
+  String get statisticsSummaryLongestSession;
 
   /// No description provided for @loadingTitle.
   ///

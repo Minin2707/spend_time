@@ -1,4 +1,6 @@
 abstract final class AppRoutes {
+  static const String startup = '/startup';
+
   static const String onboarding = '/';
 
   static const String home = '/home';

@@ -31,8 +31,20 @@ class $AppSettingsTable extends AppSettings
     requiredDuringInsert: false,
     defaultValue: const Constant<String>('light'),
   );
+  static const VerificationMeta _languageMeta = const VerificationMeta(
+    'language',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, themeMode];
+  late final GeneratedColumn<String> language = GeneratedColumn<String>(
+    'language',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant<String>('system'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, themeMode, language];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -54,6 +66,12 @@ class $AppSettingsTable extends AppSettings
         themeMode.isAcceptableOrUnknown(data['theme_mode']!, _themeModeMeta),
       );
     }
+    if (data.containsKey('language')) {
+      context.handle(
+        _languageMeta,
+        language.isAcceptableOrUnknown(data['language']!, _languageMeta),
+      );
+    }
     return context;
   }
 
@@ -71,6 +89,10 @@ class $AppSettingsTable extends AppSettings
         DriftSqlType.string,
         data['${effectivePrefix}theme_mode'],
       )!,
+      language: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language'],
+      )!,
     );
   }
 
@@ -83,17 +105,27 @@ class $AppSettingsTable extends AppSettings
 class AppSetting extends DataClass implements Insertable<AppSetting> {
   final int id;
   final String themeMode;
-  const AppSetting({required this.id, required this.themeMode});
+  final String language;
+  const AppSetting({
+    required this.id,
+    required this.themeMode,
+    required this.language,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['theme_mode'] = Variable<String>(themeMode);
+    map['language'] = Variable<String>(language);
     return map;
   }
 
   AppSettingsCompanion toCompanion(bool nullToAbsent) {
-    return AppSettingsCompanion(id: Value(id), themeMode: Value(themeMode));
+    return AppSettingsCompanion(
+      id: Value(id),
+      themeMode: Value(themeMode),
+      language: Value(language),
+    );
   }
 
   factory AppSetting.fromJson(
@@ -104,6 +136,7 @@ class AppSetting extends DataClass implements Insertable<AppSetting> {
     return AppSetting(
       id: serializer.fromJson<int>(json['id']),
       themeMode: serializer.fromJson<String>(json['themeMode']),
+      language: serializer.fromJson<String>(json['language']),
     );
   }
   @override
@@ -112,15 +145,21 @@ class AppSetting extends DataClass implements Insertable<AppSetting> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'themeMode': serializer.toJson<String>(themeMode),
+      'language': serializer.toJson<String>(language),
     };
   }
 
-  AppSetting copyWith({int? id, String? themeMode}) =>
-      AppSetting(id: id ?? this.id, themeMode: themeMode ?? this.themeMode);
+  AppSetting copyWith({int? id, String? themeMode, String? language}) =>
+      AppSetting(
+        id: id ?? this.id,
+        themeMode: themeMode ?? this.themeMode,
+        language: language ?? this.language,
+      );
   AppSetting copyWithCompanion(AppSettingsCompanion data) {
     return AppSetting(
       id: data.id.present ? data.id.value : this.id,
       themeMode: data.themeMode.present ? data.themeMode.value : this.themeMode,
+      language: data.language.present ? data.language.value : this.language,
     );
   }
 
@@ -128,46 +167,58 @@ class AppSetting extends DataClass implements Insertable<AppSetting> {
   String toString() {
     return (StringBuffer('AppSetting(')
           ..write('id: $id, ')
-          ..write('themeMode: $themeMode')
+          ..write('themeMode: $themeMode, ')
+          ..write('language: $language')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, themeMode);
+  int get hashCode => Object.hash(id, themeMode, language);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AppSetting &&
           other.id == this.id &&
-          other.themeMode == this.themeMode);
+          other.themeMode == this.themeMode &&
+          other.language == this.language);
 }
 
 class AppSettingsCompanion extends UpdateCompanion<AppSetting> {
   final Value<int> id;
   final Value<String> themeMode;
+  final Value<String> language;
   const AppSettingsCompanion({
     this.id = const Value.absent(),
     this.themeMode = const Value.absent(),
+    this.language = const Value.absent(),
   });
   AppSettingsCompanion.insert({
     this.id = const Value.absent(),
     this.themeMode = const Value.absent(),
+    this.language = const Value.absent(),
   });
   static Insertable<AppSetting> custom({
     Expression<int>? id,
     Expression<String>? themeMode,
+    Expression<String>? language,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (themeMode != null) 'theme_mode': themeMode,
+      if (language != null) 'language': language,
     });
   }
 
-  AppSettingsCompanion copyWith({Value<int>? id, Value<String>? themeMode}) {
+  AppSettingsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? themeMode,
+    Value<String>? language,
+  }) {
     return AppSettingsCompanion(
       id: id ?? this.id,
       themeMode: themeMode ?? this.themeMode,
+      language: language ?? this.language,
     );
   }
 
@@ -180,6 +231,9 @@ class AppSettingsCompanion extends UpdateCompanion<AppSetting> {
     if (themeMode.present) {
       map['theme_mode'] = Variable<String>(themeMode.value);
     }
+    if (language.present) {
+      map['language'] = Variable<String>(language.value);
+    }
     return map;
   }
 
@@ -187,7 +241,8 @@ class AppSettingsCompanion extends UpdateCompanion<AppSetting> {
   String toString() {
     return (StringBuffer('AppSettingsCompanion(')
           ..write('id: $id, ')
-          ..write('themeMode: $themeMode')
+          ..write('themeMode: $themeMode, ')
+          ..write('language: $language')
           ..write(')'))
         .toString();
   }
@@ -1130,9 +1185,17 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 }
 
 typedef $$AppSettingsTableCreateCompanionBuilder =
-    AppSettingsCompanion Function({Value<int> id, Value<String> themeMode});
+    AppSettingsCompanion Function({
+      Value<int> id,
+      Value<String> themeMode,
+      Value<String> language,
+    });
 typedef $$AppSettingsTableUpdateCompanionBuilder =
-    AppSettingsCompanion Function({Value<int> id, Value<String> themeMode});
+    AppSettingsCompanion Function({
+      Value<int> id,
+      Value<String> themeMode,
+      Value<String> language,
+    });
 
 class $$AppSettingsTableFilterComposer
     extends Composer<_$AppDatabase, $AppSettingsTable> {
@@ -1150,6 +1213,11 @@ class $$AppSettingsTableFilterComposer
 
   ColumnFilters<String> get themeMode => $composableBuilder(
     column: $table.themeMode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get language => $composableBuilder(
+    column: $table.language,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -1172,6 +1240,11 @@ class $$AppSettingsTableOrderingComposer
     column: $table.themeMode,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get language => $composableBuilder(
+    column: $table.language,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$AppSettingsTableAnnotationComposer
@@ -1188,6 +1261,9 @@ class $$AppSettingsTableAnnotationComposer
 
   GeneratedColumn<String> get themeMode =>
       $composableBuilder(column: $table.themeMode, builder: (column) => column);
+
+  GeneratedColumn<String> get language =>
+      $composableBuilder(column: $table.language, builder: (column) => column);
 }
 
 class $$AppSettingsTableTableManager
@@ -1223,12 +1299,22 @@ class $$AppSettingsTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> themeMode = const Value.absent(),
-              }) => AppSettingsCompanion(id: id, themeMode: themeMode),
+                Value<String> language = const Value.absent(),
+              }) => AppSettingsCompanion(
+                id: id,
+                themeMode: themeMode,
+                language: language,
+              ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> themeMode = const Value.absent(),
-              }) => AppSettingsCompanion.insert(id: id, themeMode: themeMode),
+                Value<String> language = const Value.absent(),
+              }) => AppSettingsCompanion.insert(
+                id: id,
+                themeMode: themeMode,
+                language: language,
+              ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
               .toList(),

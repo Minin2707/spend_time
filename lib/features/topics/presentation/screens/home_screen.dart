@@ -42,30 +42,8 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          context.l10n.homeTitle,
+          context.l10n.navigationTopics,
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.analytics,
-            ),
-            onPressed: () {
-              context.push(
-                AppRoutes.statistics,
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.settings_outlined,
-            ),
-            onPressed: () {
-              context.push(
-                AppRoutes.settings,
-              );
-            },
-          ),
-        ],
       ),
       body: topics.when(
         data: (items) {
@@ -162,14 +140,6 @@ class HomeScreen extends ConsumerWidget {
         loading: () => const AppLoadingView(),
         error: (error, stackTrace) => AppErrorView(
           message: error.toString(),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _openCreateTopicScreen(
-          context,
-        ),
-        child: const Icon(
-          Icons.add,
         ),
       ),
     );

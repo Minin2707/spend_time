@@ -14,6 +14,12 @@ class AppSettings extends Table {
     ),
   )();
 
+  TextColumn get language => text().withDefault(
+    const Constant<String>(
+      'system',
+    ),
+  )();
+
   @override
   Set<Column> get primaryKey => {
     id,

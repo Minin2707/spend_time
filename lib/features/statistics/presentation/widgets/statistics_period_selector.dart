@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:spend_time/core/localization/l10n.dart';
 import 'package:spend_time/features/statistics/domain/statistics_period.dart';
+import 'package:spend_time/features/statistics/presentation/mappers/statistics_period_label.dart';
 
 class StatisticsPeriodSelector extends StatelessWidget {
   const StatisticsPeriodSelector({
@@ -16,47 +18,29 @@ class StatisticsPeriodSelector extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) {
-    return SegmentedButton<StatisticsPeriod>(
-      segments: const [
-        ButtonSegment(
-          value: StatisticsPeriod.today,
-          label: Text(
-            'Today',
-          ),
-        ),
-        ButtonSegment(
-          value: StatisticsPeriod.week,
-          label: Text(
-            'Week',
-          ),
-        ),
-        ButtonSegment(
-          value: StatisticsPeriod.month,
-          label: Text(
-            'Month',
-          ),
-        ),
-        ButtonSegment(
-          value: StatisticsPeriod.year,
-          label: Text(
-            'Year',
-          ),
-        ),
-        ButtonSegment(
-          value: StatisticsPeriod.all,
-          label: Text(
-            'All',
-          ),
-        ),
-      ],
-      selected: {
-        selectedPeriod,
-      },
-      onSelectionChanged: (selection) {
-        onChanged(
-          selection.first,
-        );
-      },
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: SegmentedButton<StatisticsPeriod>(
+        segments: [
+          for (final period in StatisticsPeriod.values)
+            ButtonSegment(
+              value: period,
+              label: Text(
+                period.localizedLabel(
+                  context.l10n,
+                ),
+              ),
+            ),
+        ],
+        selected: {
+          selectedPeriod,
+        },
+        onSelectionChanged: (selection) {
+          onChanged(
+            selection.first,
+          );
+        },
+      ),
     );
   }
 }

@@ -36,6 +36,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createTopic => 'Create topic';
 
   @override
+  String get navigationTopics => 'Topics';
+
+  @override
+  String get navigationStatistics => 'Statistics';
+
+  @override
+  String get navigationSettings => 'Settings';
+
+  @override
   String get createTopicTitle => 'New topic';
 
   @override
@@ -111,13 +120,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get themeModeDark => 'Dark';
 
   @override
+  String get languageSystem => 'System';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageRussian => 'Russian';
+
+  @override
   String get settingsTitle => 'Settings';
 
   @override
   String get appearanceSectionTitle => 'Appearance';
 
   @override
+  String get languageSectionTitle => 'Language';
+
+  @override
   String get updateThemeErrorMessage => 'Could not update theme.';
+
+  @override
+  String get updateLanguageErrorMessage =>
+      'Could not change the language. Please try again.';
 
   @override
   String get noStatisticsDistributionTitle => 'No distribution yet';
@@ -125,6 +150,33 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get noStatisticsDistributionSubtitle =>
       'Completed sessions will appear here.';
+
+  @override
+  String get statisticsPeriodToday => 'Today';
+
+  @override
+  String get statisticsPeriodWeek => 'Week';
+
+  @override
+  String get statisticsPeriodMonth => 'Month';
+
+  @override
+  String get statisticsPeriodYear => 'Year';
+
+  @override
+  String get statisticsPeriodAll => 'All';
+
+  @override
+  String get statisticsSummaryTotalTime => 'Total time';
+
+  @override
+  String get statisticsSummarySessionsCount => 'Sessions';
+
+  @override
+  String get statisticsSummaryAverageSession => 'Average session';
+
+  @override
+  String get statisticsSummaryLongestSession => 'Longest session';
 
   @override
   String get loadingTitle => 'Loading...';

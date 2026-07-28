@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:spend_time/core/domain/app_language.dart';
 import 'package:spend_time/core/domain/app_theme_mode.dart';
 import 'package:spend_time/database/app_database.dart';
 import 'package:spend_time/database/tables/app_settings.dart';
@@ -8,9 +9,11 @@ part 'app_settings_dao.g.dart';
 class AppSettingsData {
   const AppSettingsData({
     required this.themeMode,
+    required this.language,
   });
 
   final AppThemeMode themeMode;
+  final AppLanguage language;
 }
 
 @DriftAccessor(
@@ -39,6 +42,9 @@ class AppSettingsDao extends DatabaseAccessor<AppDatabase>
       themeMode: AppThemeMode.fromStorageValue(
         row.themeMode,
       ),
+      language: AppLanguage.fromStorageValue(
+        row.language,
+      ),
     );
   }
 
@@ -55,6 +61,24 @@ class AppSettingsDao extends DatabaseAccessor<AppDatabase>
       AppSettingsCompanion(
         themeMode: Value(
           themeMode,
+        ),
+      ),
+    );
+  }
+
+  Future<void> updateLanguage({
+    required String language,
+  }) {
+    return (update(appSettings)
+          ..where(
+            (table) => table.id.equals(
+              _settingsId,
+            ),
+          ))
+        .write(
+      AppSettingsCompanion(
+        language: Value(
+          language,
         ),
       ),
     );

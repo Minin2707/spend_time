@@ -36,6 +36,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get createTopic => 'Создать тему';
 
   @override
+  String get navigationTopics => 'Темы';
+
+  @override
+  String get navigationStatistics => 'Статистика';
+
+  @override
+  String get navigationSettings => 'Настройки';
+
+  @override
   String get createTopicTitle => 'Новая тема';
 
   @override
@@ -111,13 +120,29 @@ class AppLocalizationsRu extends AppLocalizations {
   String get themeModeDark => 'Тёмная';
 
   @override
+  String get languageSystem => 'Системный';
+
+  @override
+  String get languageEnglish => 'Английский';
+
+  @override
+  String get languageRussian => 'Русский';
+
+  @override
   String get settingsTitle => 'Настройки';
 
   @override
   String get appearanceSectionTitle => 'Внешний вид';
 
   @override
+  String get languageSectionTitle => 'Язык';
+
+  @override
   String get updateThemeErrorMessage => 'Не удалось обновить тему оформления.';
+
+  @override
+  String get updateLanguageErrorMessage =>
+      'Не удалось изменить язык. Попробуйте ещё раз.';
 
   @override
   String get noStatisticsDistributionTitle => 'Распределения пока нет';
@@ -125,6 +150,33 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get noStatisticsDistributionSubtitle =>
       'Завершённые сессии появятся здесь.';
+
+  @override
+  String get statisticsPeriodToday => 'Сегодня';
+
+  @override
+  String get statisticsPeriodWeek => 'Неделя';
+
+  @override
+  String get statisticsPeriodMonth => 'Месяц';
+
+  @override
+  String get statisticsPeriodYear => 'Год';
+
+  @override
+  String get statisticsPeriodAll => 'Всё время';
+
+  @override
+  String get statisticsSummaryTotalTime => 'Общее время';
+
+  @override
+  String get statisticsSummarySessionsCount => 'Количество сессий';
+
+  @override
+  String get statisticsSummaryAverageSession => 'Средняя длительность';
+
+  @override
+  String get statisticsSummaryLongestSession => 'Самая длинная сессия';
 
   @override
   String get loadingTitle => 'Загрузка...';

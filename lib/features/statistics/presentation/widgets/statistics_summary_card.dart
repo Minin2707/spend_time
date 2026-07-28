@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:spend_time/core/localization/l10n.dart';
 import 'package:spend_time/core/theme/app_spacing.dart';
 import 'package:spend_time/core/utils/duration_formatter.dart';
 import 'package:spend_time/core/widgets/app_card.dart';
 import 'package:spend_time/features/statistics/domain/statistics_period.dart';
 import 'package:spend_time/features/statistics/domain/statistics_summary.dart';
+import 'package:spend_time/features/statistics/presentation/mappers/statistics_period_label.dart';
 
 class StatisticsSummaryCard extends StatelessWidget {
   const StatisticsSummaryCard({
@@ -25,8 +27,8 @@ class StatisticsSummaryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            _periodTitle(
-              period,
+            period.localizedLabel(
+              context.l10n,
             ),
             style: Theme.of(context).textTheme.titleMedium,
           ),
@@ -34,7 +36,7 @@ class StatisticsSummaryCard extends StatelessWidget {
             height: AppSpacing.lg,
           ),
           _StatisticsSummaryRow(
-            label: 'Общее время',
+            label: context.l10n.statisticsSummaryTotalTime,
             value: DurationFormatter.formatClock(
               summary.totalTime,
             ),
@@ -43,14 +45,14 @@ class StatisticsSummaryCard extends StatelessWidget {
             height: AppSpacing.sm,
           ),
           _StatisticsSummaryRow(
-            label: 'Количество сессий',
+            label: context.l10n.statisticsSummarySessionsCount,
             value: summary.sessionsCount.toString(),
           ),
           const SizedBox(
             height: AppSpacing.sm,
           ),
           _StatisticsSummaryRow(
-            label: 'Средняя длительность',
+            label: context.l10n.statisticsSummaryAverageSession,
             value: DurationFormatter.formatClock(
               summary.averageSession,
             ),
@@ -59,7 +61,7 @@ class StatisticsSummaryCard extends StatelessWidget {
             height: AppSpacing.sm,
           ),
           _StatisticsSummaryRow(
-            label: 'Самая длинная сессия',
+            label: context.l10n.statisticsSummaryLongestSession,
             value: DurationFormatter.formatClock(
               summary.longestSession,
             ),
@@ -67,18 +69,6 @@ class StatisticsSummaryCard extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String _periodTitle(
-    StatisticsPeriod period,
-  ) {
-    return switch (period) {
-      StatisticsPeriod.today => 'Today',
-      StatisticsPeriod.week => 'Week',
-      StatisticsPeriod.month => 'Month',
-      StatisticsPeriod.year => 'Year',
-      StatisticsPeriod.all => 'All',
-    };
   }
 }
 
