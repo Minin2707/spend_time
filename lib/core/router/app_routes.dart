@@ -9,7 +9,15 @@ abstract final class AppRoutes {
 
   static const String createTopic = '/topics/create';
 
+  static const String editTopic = '/topics/:topicId/edit';
+
   static const String sessionHistory = '/session-history/:topicId';
+
+  static String editTopicPath(
+    int topicId,
+  ) {
+    return '/topics/$topicId/edit';
+  }
 
   static String sessionHistoryLocation(
     int topicId,

@@ -6,16 +6,14 @@ import 'package:spend_time/core/router/app_routes.dart';
 import 'package:spend_time/core/theme/app_spacing.dart';
 import 'package:spend_time/core/widgets/app_error_view.dart';
 import 'package:spend_time/core/widgets/app_loading_view.dart';
+import 'package:spend_time/database/app_database.dart';
 import 'package:spend_time/features/sessions/application/session_provider.dart';
 import 'package:spend_time/features/topics/application/active_topic_deletion_exception.dart';
-import 'package:spend_time/features/topics/application/empty_topic_name_exception.dart';
 import 'package:spend_time/features/topics/application/topics_notifier.dart';
-import 'package:spend_time/features/topics/data/topic_update_exception.dart';
 import 'package:spend_time/features/topics/domain/topic_color_key.dart';
 import 'package:spend_time/features/topics/domain/topic_icon_key.dart';
 import 'package:spend_time/features/topics/presentation/dialogs/delete_topic_dialog.dart';
-import 'package:spend_time/features/topics/presentation/dialogs/edit_topic_dialog.dart';
-import 'package:spend_time/features/topics/presentation/dialogs/edit_topic_result.dart';
+import 'package:spend_time/features/topics/presentation/screens/edit_topic_route_args.dart';
 import 'package:spend_time/features/topics/presentation/widgets/home_topics_empty_view.dart';
 import 'package:spend_time/features/topics/presentation/widgets/topic_card.dart';
 
@@ -121,60 +119,10 @@ class HomeScreen extends ConsumerWidget {
                     ),
                   );
                 },
-                onEdit: () async {
-                  final EditTopicResult? result =
-                  await showDialog<EditTopicResult>(
-                    context: context,
-                    builder: (_) => EditTopicDialog(
-                      initialName: topic.name,
-                      initialColor: TopicColorKey.fromStorageValue(
-                        topic.colorKey,
-                      ),
-                      initialIcon: TopicIconKey.fromStorageValue(
-                        topic.iconKey,
-                      ),
-                    ),
-                  );
-
-                  if (result == null) {
-                    return;
-                  }
-
-                  try {
-                    await ref.read(
-                      topicsProvider.notifier,
-                    ).updateTopic(
-                      id: topic.id,
-                      name: result.name,
-                      colorKey: result.colorKey,
-                      iconKey: result.iconKey,
-                    );
-                  } on EmptyTopicNameException {
-                    if (!context.mounted) {
-                      return;
-                    }
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          context.l10n.emptyTopicNameMessage,
-                        ),
-                      ),
-                    );
-                  } on TopicUpdateException {
-                    if (!context.mounted) {
-                      return;
-                    }
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          context.l10n.updateTopicErrorMessage,
-                        ),
-                      ),
-                    );
-                  }
-                },
+                onEdit: () => _openEditTopicScreen(
+                  context,
+                  topic,
+                ),
                 onDelete: () async {
                   final bool? confirmed = await showDialog<bool>(
                     context: context,
@@ -232,6 +180,26 @@ class HomeScreen extends ConsumerWidget {
   ) async {
     await context.push<bool>(
       AppRoutes.createTopic,
+    );
+  }
+
+  Future<void> _openEditTopicScreen(
+    BuildContext context,
+    Topic topic,
+  ) async {
+    await context.push<bool>(
+      AppRoutes.editTopicPath(
+        topic.id,
+      ),
+      extra: EditTopicRouteArgs(
+        initialName: topic.name,
+        initialColor: TopicColorKey.fromStorageValue(
+          topic.colorKey,
+        ),
+        initialIcon: TopicIconKey.fromStorageValue(
+          topic.iconKey,
+        ),
+      ),
     );
   }
 }

@@ -5,6 +5,8 @@ import 'package:spend_time/features/onboarding/presentation/screens/onboarding_s
 import 'package:spend_time/features/sessions/presentation/screens/session_history_screen.dart';
 import 'package:spend_time/features/statistics/presentation/screens/statistics_screen.dart';
 import 'package:spend_time/features/topics/presentation/screens/create_topic_screen.dart';
+import 'package:spend_time/features/topics/presentation/screens/edit_topic_route_args.dart';
+import 'package:spend_time/features/topics/presentation/screens/edit_topic_screen.dart';
 import 'package:spend_time/features/topics/presentation/screens/home_screen.dart';
 
 abstract final class AppRouter {
@@ -34,6 +36,29 @@ abstract final class AppRouter {
       GoRoute(
         path: AppRoutes.createTopic,
         builder: (_, _) => const CreateTopicScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.editTopic,
+        builder: (
+          _,
+          state,
+        ) {
+          final topicId = int.tryParse(
+            state.pathParameters['topicId'] ?? '',
+          );
+          final extra = state.extra;
+
+          if (topicId == null || extra is! EditTopicRouteArgs) {
+            return const HomeScreen();
+          }
+
+          return EditTopicScreen(
+            topicId: topicId,
+            initialName: extra.initialName,
+            initialColor: extra.initialColor,
+            initialIcon: extra.initialIcon,
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.sessionHistory,
