@@ -40,106 +40,141 @@ class HomeScreen extends ConsumerWidget {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          context.l10n.navigationTopics,
-        ),
-      ),
-      body: topics.when(
-        data: (items) {
-          if (items.isEmpty) {
-            return HomeTopicsEmptyView(
-              title: context.l10n.noTopicsTitle,
-              subtitle: context.l10n.noTopicsSubtitle,
-              buttonText: context.l10n.createTopic,
-              onCreateTopic: () => _openCreateTopicScreen(
-                context,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.md,
+                AppSpacing.lg,
+                AppSpacing.md,
+                0,
               ),
-            );
-          }
-
-          return ListView.separated(
-            padding: const EdgeInsets.all(
-              AppSpacing.md,
-            ),
-            itemCount: items.length,
-            separatorBuilder: (_, _) => const SizedBox(
-              height: AppSpacing.sm,
-            ),
-            itemBuilder: (context, index) {
-              final topic = items[index];
-              return TopicCard(
-                topic: topic,
-                isActive:
-                session.value?.activeSession?.topicId ==
-                    topic.id,
-                elapsed:
-                session.value?.activeSession?.topicId ==
-                    topic.id
-                    ? session.value?.elapsed ?? Duration.zero
-                    : Duration.zero,
-                onStart: () {
-                  ref.read(
-                    sessionProvider.notifier,
-                  ).startSession(
-                    topicId: topic.id,
-                  );
-                },
-                onStop: () {
-                  ref.read(
-                    sessionProvider.notifier,
-                  ).stopSession();
-                },
-                onTap: () {
-                  context.push(
-                    AppRoutes.sessionHistoryLocation(
-                      topic.id,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      context.l10n.navigationTopics,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium
+                          ?.copyWith(
+                            fontWeight: FontWeight.w800,
+                          ),
                     ),
-                  );
-                },
-                onEdit: () => _openEditTopicScreen(
-                  context,
-                  topic,
-                ),
-                onDelete: () async {
-                  final bool? confirmed = await showDialog<bool>(
-                    context: context,
-                    builder: (_) => DeleteTopicDialog(
-                      topicName: topic.name,
-                    ),
-                  );
-
-                  if (confirmed != true) {
-                    return;
-                  }
-
-                  try {
-                    await ref.read(
-                      topicsProvider.notifier,
-                    ).deleteTopic(
-                      id: topic.id,
-                    );
-                  } on ActiveTopicDeletionException {
-                    if (!context.mounted) {
-                      return;
-                    }
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          context.l10n.deleteActiveTopicMessage,
-                        ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: AppSpacing.lg,
+            ),
+            Expanded(
+              child: topics.when(
+                data: (items) {
+                  if (items.isEmpty) {
+                    return HomeTopicsEmptyView(
+                      title: context.l10n.noTopicsTitle,
+                      subtitle: context.l10n.noTopicsSubtitle,
+                      buttonText: context.l10n.createTopic,
+                      onCreateTopic: () => _openCreateTopicScreen(
+                        context,
                       ),
                     );
                   }
+
+                  return ListView.separated(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.md,
+                      0,
+                      AppSpacing.md,
+                      AppSpacing.md,
+                    ),
+                    itemCount: items.length,
+                    separatorBuilder: (_, _) => const SizedBox(
+                      height: AppSpacing.sm,
+                    ),
+                    itemBuilder: (context, index) {
+                      final topic = items[index];
+                      return TopicCard(
+                        topic: topic,
+                        isActive:
+                        session.value?.activeSession?.topicId ==
+                            topic.id,
+                        elapsed:
+                        session.value?.activeSession?.topicId ==
+                            topic.id
+                            ? session.value?.elapsed ?? Duration.zero
+                            : Duration.zero,
+                        onStart: () {
+                          ref.read(
+                            sessionProvider.notifier,
+                          ).startSession(
+                            topicId: topic.id,
+                          );
+                        },
+                        onStop: () {
+                          ref.read(
+                            sessionProvider.notifier,
+                          ).stopSession();
+                        },
+                        onTap: () {
+                          context.push(
+                            AppRoutes.sessionHistoryLocation(
+                              topic.id,
+                            ),
+                          );
+                        },
+                        onEdit: () => _openEditTopicScreen(
+                          context,
+                          topic,
+                        ),
+                        onDelete: () async {
+                          final bool? confirmed = await showDialog<bool>(
+                            context: context,
+                            builder: (_) => DeleteTopicDialog(
+                              topicName: topic.name,
+                            ),
+                          );
+
+                          if (confirmed != true) {
+                            return;
+                          }
+
+                          try {
+                            await ref.read(
+                              topicsProvider.notifier,
+                            ).deleteTopic(
+                              id: topic.id,
+                            );
+                          } on ActiveTopicDeletionException {
+                            if (!context.mounted) {
+                              return;
+                            }
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  context.l10n.deleteActiveTopicMessage,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      );
+                    },
+                  );
                 },
-              );
-            },
-          );
-        },
-        loading: () => const AppLoadingView(),
-        error: (error, stackTrace) => AppErrorView(
-          message: error.toString(),
+                loading: () => const AppLoadingView(),
+                error: (error, stackTrace) => AppErrorView(
+                  message: error.toString(),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

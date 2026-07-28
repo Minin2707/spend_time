@@ -15,19 +15,23 @@ class MainNavigationShell extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) {
+    final bool isTopicsTab = navigationShell.currentIndex == 0;
+
     return Scaffold(
       body: navigationShell,
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        onPressed: () {
-          context.push(
-            AppRoutes.createTopic,
-          );
-        },
-        child: const Icon(
-          Icons.add_rounded,
-        ),
-      ),
+      floatingActionButton: isTopicsTab
+          ? FloatingActionButton(
+              shape: const CircleBorder(),
+              onPressed: () {
+                context.push(
+                  AppRoutes.createTopic,
+                );
+              },
+              child: const Icon(
+                Icons.add_rounded,
+              ),
+            )
+          : null,
       floatingActionButtonLocation:
           FloatingActionButtonLocation.centerFloat,
       bottomNavigationBar: NavigationBar(

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spend_time/core/localization/l10n.dart';
 import 'package:spend_time/core/theme/app_spacing.dart';
 import 'package:spend_time/core/utils/duration_formatter.dart';
-import 'package:spend_time/core/widgets/app_button.dart';
 import 'package:spend_time/core/widgets/app_card.dart';
 import 'package:spend_time/database/app_database.dart';
 import 'package:spend_time/features/topics/application/topic_statistics_provider.dart';
@@ -41,6 +40,8 @@ class TopicCard extends ConsumerWidget {
       BuildContext context,
       WidgetRef ref,
       ) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
     final AsyncValue<TopicStatistics> statistics = ref.watch(
       topicStatisticsProvider(
         topic.id,
@@ -65,145 +66,155 @@ class TopicCard extends ConsumerWidget {
     return AppCard(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.all(
-          AppSpacing.lg,
+        padding: const EdgeInsets.symmetric(
+          vertical: AppSpacing.lg,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
+            Stack(
               children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: topicColor.withValues(
-                      alpha: 0.14,
+                Row(
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: topicColor.withValues(
+                          alpha: 0.14,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        TopicIconMapper.iconFor(
+                          topicIconKey,
+                        ),
+                        size: 22,
+                        color: topicColor,
+                      ),
                     ),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    TopicIconMapper.iconFor(
-                      topicIconKey,
+                    const SizedBox(
+                      width: AppSpacing.sm,
                     ),
-                    size: 22,
-                    color: topicColor,
-                  ),
-                ),
-                const SizedBox(
-                  width: AppSpacing.sm,
-                ),
-                Expanded(
-                  child: Text(
-                    topic.name,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            topic.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: textTheme.titleMedium,
+                          ),
+                          const SizedBox(
+                            height: AppSpacing.sm,
+                          ),
+                          Text(
+                            context.l10n.todayLabel,
+                            style: textTheme.bodySmall?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                          Text(
+                            DurationFormatter.formatClock(
+                              isActive
+                                  ? elapsed
+                                  : topicStatistics.today,
+                            ),
+                            style: textTheme.bodyMedium,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      width: AppSpacing.sm,
+                    ),
+                    IconButton.filled(
+                      tooltip: isActive
+                          ? context.l10n.stopButton
+                          : context.l10n.startButton,
+                      style: IconButton.styleFrom(
+                        backgroundColor: topicColor,
+                        foregroundColor: colorScheme.onPrimary,
+                        fixedSize: const Size.square(
+                          48,
+                        ),
+                        padding: EdgeInsets.zero,
+                      ),
+                      icon: Icon(
+                        isActive
+                            ? Icons.pause_rounded
+                            : Icons.play_arrow_rounded,
+                      ),
+                      onPressed: isActive
+                          ? onStop
+                          : onStart,
+                    ),
+                    if (onEdit != null || onDelete != null)
+                      const SizedBox(
+                        width: AppSpacing.xxl,
+                      ),
+                  ],
                 ),
                 if (onEdit != null || onDelete != null)
-                  PopupMenuButton<_TopicCardAction>(
-                    icon: const Icon(
-                      Icons.more_vert,
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: PopupMenuButton<_TopicCardAction>(
+                      iconSize: 20,
+                      padding: EdgeInsets.zero,
+                      splashRadius: 20,
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                      onSelected: (action) {
+                        switch (action) {
+                          case _TopicCardAction.edit:
+                            onEdit?.call();
+                          case _TopicCardAction.delete:
+                            onDelete?.call();
+                        }
+                      },
+                      itemBuilder: (context) => [
+                        if (onEdit != null)
+                          PopupMenuItem(
+                            value: _TopicCardAction.edit,
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.edit_outlined,
+                                ),
+                                const SizedBox(
+                                  width: AppSpacing.sm,
+                                ),
+                                Text(
+                                  context.l10n.editTopicMenuItem,
+                                ),
+                              ],
+                            ),
+                          ),
+                        if (onDelete != null)
+                          PopupMenuItem(
+                            value: _TopicCardAction.delete,
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.delete_outline,
+                                ),
+                                const SizedBox(
+                                  width: AppSpacing.sm,
+                                ),
+                                Text(
+                                  context.l10n.deleteTopicMenuItem,
+                                ),
+                              ],
+                            ),
+                          ),
+                      ],
                     ),
-                    onSelected: (action) {
-                      switch (action) {
-                        case _TopicCardAction.edit:
-                          onEdit?.call();
-                        case _TopicCardAction.delete:
-                          onDelete?.call();
-                      }
-                    },
-                    itemBuilder: (context) => [
-                      if (onEdit != null)
-                        PopupMenuItem(
-                          value: _TopicCardAction.edit,
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.edit_outlined,
-                              ),
-                              const SizedBox(
-                                width: AppSpacing.sm,
-                              ),
-                              Text(
-                                context.l10n.editTopicMenuItem,
-                              ),
-                            ],
-                          ),
-                        ),
-                      if (onDelete != null)
-                        PopupMenuItem(
-                          value: _TopicCardAction.delete,
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.delete_outline,
-                              ),
-                              const SizedBox(
-                                width: AppSpacing.sm,
-                              ),
-                              Text(
-                                context.l10n.deleteTopicMenuItem,
-                              ),
-                            ],
-                          ),
-                        ),
-                    ],
                   ),
               ],
-            ),
-
-            const SizedBox(
-              height: AppSpacing.lg,
-            ),
-
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    context.l10n.todayLabel,
-                  ),
-                ),
-                Text(
-                  DurationFormatter.formatClock(
-                    isActive
-                        ? elapsed
-                        : topicStatistics.today,
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(
-              height: AppSpacing.sm,
-            ),
-
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    context.l10n.totalLabel,
-                  ),
-                ),
-
-                Text(
-                  DurationFormatter.formatClock(
-                    topicStatistics.total,
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(
-              height: AppSpacing.lg,
-            ),
-
-            AppButton(
-              text: isActive
-                  ? context.l10n.stopButton
-                  : context.l10n.startButton,
-              onPressed: isActive
-                  ? onStop
-                  : onStart,
             ),
           ],
         ),
