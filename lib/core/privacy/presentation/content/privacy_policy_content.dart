@@ -30,7 +30,7 @@ abstract final class PrivacyPolicyContentSource {
     };
   }
 
-  static const String _contactEmail = 'belavskijgeorgij9@gmail.com';
+  static const String _contactEmail = 'support.spend.time.dev@gmail.com';
 
   static const PrivacyPolicyContent _en = PrivacyPolicyContent(
     lastUpdated: 'July 29, 2026',

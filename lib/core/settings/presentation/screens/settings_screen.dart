@@ -9,6 +9,7 @@ import 'package:spend_time/core/settings/application/language_settings_provider.
 import 'package:spend_time/core/settings/application/theme_settings_provider.dart';
 import 'package:spend_time/core/settings/presentation/widgets/language_selector.dart';
 import 'package:spend_time/core/settings/presentation/widgets/theme_mode_selector.dart';
+import 'package:spend_time/core/theme/app_radius.dart';
 import 'package:spend_time/core/theme/app_spacing.dart';
 import 'package:spend_time/core/widgets/app_card.dart';
 import 'package:spend_time/core/widgets/app_error_view.dart';
@@ -20,7 +21,7 @@ class SettingsScreen extends ConsumerWidget {
     super.key,
   });
 
-  static const String _supportEmail = 'belavskijgeorgij9@gmail.com';
+  static const String _supportEmail = 'support.spend.time.dev@gmail.com';
 
   @override
   Widget build(
@@ -151,23 +152,32 @@ class SettingsScreen extends ConsumerWidget {
             ),
             AppCard(
               padding: EdgeInsets.zero,
-              child: ListTile(
-                leading: Icon(
-                  Icons.mail_outline_rounded,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+              child: Material(
+                color: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    AppRadius.large,
+                  ),
                 ),
-                title: Text(
-                  context.l10n.feedbackTitle,
-                ),
-                subtitle: Text(
-                  context.l10n.feedbackSubtitle,
-                ),
-                trailing: const Icon(
-                  Icons.chevron_right_rounded,
-                ),
-                onTap: () => _openFeedbackEmail(
-                  context,
-                  packageInfoValue,
+                clipBehavior: Clip.antiAlias,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.mail_outline_rounded,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                  title: Text(
+                    context.l10n.feedbackTitle,
+                  ),
+                  subtitle: Text(
+                    context.l10n.feedbackSubtitle,
+                  ),
+                  trailing: const Icon(
+                    Icons.chevron_right_rounded,
+                  ),
+                  onTap: () => _openFeedbackEmail(
+                    context,
+                    packageInfoValue,
+                  ),
                 ),
               ),
             ),
@@ -183,47 +193,56 @@ class SettingsScreen extends ConsumerWidget {
             ),
             AppCard(
               padding: EdgeInsets.zero,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ListTile(
-                    leading: Icon(
-                      Icons.info_outline_rounded,
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                    title: Text(
-                      context.l10n.aboutAppTitle,
-                    ),
-                    subtitle: versionLabel == null
-                        ? null
-                        : Text(
-                            versionLabel,
-                          ),
-                    trailing: const Icon(
-                      Icons.chevron_right_rounded,
-                    ),
-                    onTap: () => _showAboutDialog(
-                      context,
-                      packageInfoValue,
-                    ),
+              child: Material(
+                color: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    AppRadius.large,
                   ),
-                  const Divider(),
-                  ListTile(
-                    leading: Icon(
-                      Icons.shield_outlined,
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ListTile(
+                      leading: Icon(
+                        Icons.info_outline_rounded,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                      title: Text(
+                        context.l10n.aboutAppTitle,
+                      ),
+                      subtitle: versionLabel == null
+                          ? null
+                          : Text(
+                              versionLabel,
+                            ),
+                      trailing: const Icon(
+                        Icons.chevron_right_rounded,
+                      ),
+                      onTap: () => _showAboutDialog(
+                        context,
+                        packageInfoValue,
+                      ),
                     ),
-                    title: Text(
-                      context.l10n.privacyPolicyTitle,
+                    const Divider(),
+                    ListTile(
+                      leading: Icon(
+                        Icons.shield_outlined,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                      title: Text(
+                        context.l10n.privacyPolicyTitle,
+                      ),
+                      trailing: const Icon(
+                        Icons.chevron_right_rounded,
+                      ),
+                      onTap: () => context.push(
+                        AppRoutes.privacyPolicy,
+                      ),
                     ),
-                    trailing: const Icon(
-                      Icons.chevron_right_rounded,
-                    ),
-                    onTap: () => context.push(
-                      AppRoutes.privacyPolicy,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
