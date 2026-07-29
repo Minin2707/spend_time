@@ -150,6 +150,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageSectionTitle => 'Language';
 
   @override
+  String get aboutSectionTitle => 'About';
+
+  @override
+  String get aboutAppTitle => 'About Spend Time';
+
+  @override
+  String get aboutAppDescription =>
+      'A simple local time tracker for your topics.';
+
+  @override
+  String get aboutLocalDataDescription =>
+      'Your data is stored only on this device.';
+
+  @override
+  String appVersionLabel(String version, String buildNumber) {
+    return 'Version $version ($buildNumber)';
+  }
+
+  @override
   String get updateThemeErrorMessage => 'Could not update theme.';
 
   @override

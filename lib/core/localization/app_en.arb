@@ -70,6 +70,21 @@
   "settingsTitle": "Settings",
   "appearanceSectionTitle": "Appearance",
   "languageSectionTitle": "Language",
+  "aboutSectionTitle": "About",
+  "aboutAppTitle": "About Spend Time",
+  "aboutAppDescription": "A simple local time tracker for your topics.",
+  "aboutLocalDataDescription": "Your data is stored only on this device.",
+  "appVersionLabel": "Version {version} ({buildNumber})",
+  "@appVersionLabel": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "buildNumber": {
+        "type": "String"
+      }
+    }
+  },
   "updateThemeErrorMessage": "Could not update theme.",
   "updateLanguageErrorMessage": "Could not change the language. Please try again.",
   "noStatisticsDistributionTitle": "No distribution yet",

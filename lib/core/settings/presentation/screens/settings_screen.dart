@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:spend_time/core/app_info/application/package_info_provider.dart';
 import 'package:spend_time/core/localization/l10n.dart';
 import 'package:spend_time/core/settings/application/language_settings_provider.dart';
 import 'package:spend_time/core/settings/application/theme_settings_provider.dart';
@@ -26,6 +28,16 @@ class SettingsScreen extends ConsumerWidget {
     final languageSettings = ref.watch(
       languageSettingsProvider,
     );
+    final packageInfo = ref.watch(
+      packageInfoProvider,
+    );
+    final PackageInfo? packageInfoValue = packageInfo.valueOrNull;
+    final String? versionLabel = packageInfoValue == null
+        ? null
+        : context.l10n.appVersionLabel(
+            packageInfoValue.version,
+            packageInfoValue.buildNumber,
+          );
 
     return Scaffold(
       appBar: AppBar(
@@ -122,9 +134,74 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
             ),
+            const SizedBox(
+              height: AppSpacing.lg,
+            ),
+            Text(
+              context.l10n.aboutSectionTitle,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(
+              height: AppSpacing.sm,
+            ),
+            AppCard(
+              padding: EdgeInsets.zero,
+              child: ListTile(
+                leading: Icon(
+                  Icons.info_outline_rounded,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+                title: Text(
+                  context.l10n.aboutAppTitle,
+                ),
+                subtitle: versionLabel == null
+                    ? null
+                    : Text(
+                        versionLabel,
+                      ),
+                trailing: const Icon(
+                  Icons.chevron_right_rounded,
+                ),
+                onTap: () => _showAboutDialog(
+                  context,
+                  packageInfoValue,
+                ),
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  void _showAboutDialog(
+    BuildContext context,
+    PackageInfo? packageInfo,
+  ) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    showAboutDialog(
+      context: context,
+      applicationName: packageInfo?.appName ?? context.l10n.appTitle,
+      applicationVersion: packageInfo == null
+          ? null
+          : context.l10n.appVersionLabel(
+              packageInfo.version,
+              packageInfo.buildNumber,
+            ),
+      applicationIcon: CircleAvatar(
+        backgroundColor: colorScheme.primaryContainer,
+        foregroundColor: colorScheme.onPrimaryContainer,
+        child: const Icon(
+          Icons.hourglass_bottom_rounded,
+        ),
+      ),
+      applicationLegalese: context.l10n.aboutLocalDataDescription,
+      children: [
+        Text(
+          context.l10n.aboutAppDescription,
+        ),
+      ],
     );
   }
 }

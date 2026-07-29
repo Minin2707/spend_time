@@ -374,6 +374,36 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get languageSectionTitle;
 
+  /// No description provided for @aboutSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get aboutSectionTitle;
+
+  /// No description provided for @aboutAppTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About Spend Time'**
+  String get aboutAppTitle;
+
+  /// No description provided for @aboutAppDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'A simple local time tracker for your topics.'**
+  String get aboutAppDescription;
+
+  /// No description provided for @aboutLocalDataDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data is stored only on this device.'**
+  String get aboutLocalDataDescription;
+
+  /// No description provided for @appVersionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version} ({buildNumber})'**
+  String appVersionLabel(String version, String buildNumber);
+
   /// No description provided for @updateThemeErrorMessage.
   ///
   /// In en, this message translates to:

@@ -150,6 +150,25 @@ class AppLocalizationsRu extends AppLocalizations {
   String get languageSectionTitle => 'Язык';
 
   @override
+  String get aboutSectionTitle => 'О приложении';
+
+  @override
+  String get aboutAppTitle => 'О Spend Time';
+
+  @override
+  String get aboutAppDescription =>
+      'Простой локальный трекер времени по темам.';
+
+  @override
+  String get aboutLocalDataDescription =>
+      'Ваши данные хранятся только на этом устройстве.';
+
+  @override
+  String appVersionLabel(String version, String buildNumber) {
+    return 'Версия $version ($buildNumber)';
+  }
+
+  @override
   String get updateThemeErrorMessage => 'Не удалось обновить тему оформления.';
 
   @override

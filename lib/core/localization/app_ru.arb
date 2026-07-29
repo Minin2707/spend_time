@@ -64,6 +64,21 @@
   "settingsTitle": "Настройки",
   "appearanceSectionTitle": "Внешний вид",
   "languageSectionTitle": "Язык",
+  "aboutSectionTitle": "О приложении",
+  "aboutAppTitle": "О Spend Time",
+  "aboutAppDescription": "Простой локальный трекер времени по темам.",
+  "aboutLocalDataDescription": "Ваши данные хранятся только на этом устройстве.",
+  "appVersionLabel": "Версия {version} ({buildNumber})",
+  "@appVersionLabel": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "buildNumber": {
+        "type": "String"
+      }
+    }
+  },
   "updateThemeErrorMessage": "Не удалось обновить тему оформления.",
   "updateLanguageErrorMessage": "Не удалось изменить язык. Попробуйте ещё раз.",
   "noStatisticsDistributionTitle": "Распределения пока нет",
