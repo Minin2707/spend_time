@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spend_time/core/localization/l10n.dart';
-import 'package:spend_time/core/theme/app_radius.dart';
 import 'package:spend_time/core/theme/app_spacing.dart';
 import 'package:spend_time/core/widgets/app_button.dart';
-import 'package:spend_time/core/widgets/app_card.dart';
 import 'package:spend_time/core/widgets/app_text_field.dart';
 import 'package:spend_time/features/topics/application/empty_topic_name_exception.dart';
 import 'package:spend_time/features/topics/application/topics_notifier.dart';
@@ -19,7 +17,6 @@ class CreateTopicScreen extends ConsumerStatefulWidget {
   });
 
   static const double _headerSideWidth = 48;
-  static const double _placeholderHeight = AppSpacing.xxl * 2;
 
   @override
   ConsumerState<CreateTopicScreen> createState() =>
@@ -80,86 +77,94 @@ class _CreateTopicScreenState extends ConsumerState<CreateTopicScreen> {
                   constraints: BoxConstraints(
                     minHeight: constraints.maxHeight,
                   ),
-                  child: IntrinsicHeight(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: CreateTopicScreen._headerSideWidth,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: IconButton(
-                                  onPressed: _isSubmitting
-                                      ? null
-                                      : _handleClosePressed,
-                                  icon: const Icon(
-                                    Icons.close_rounded,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: CreateTopicScreen._headerSideWidth,
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: IconButton(
+                                    onPressed: _isSubmitting
+                                        ? null
+                                        : _handleClosePressed,
+                                    icon: const Icon(
+                                      Icons.close_rounded,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                'Create Topic',
-                                style: theme.textTheme.titleLarge?.copyWith(
-                                  fontWeight: FontWeight.w700,
+                              Expanded(
+                                child: Text(
+                                  'Create Topic',
+                                  style: theme.textTheme.titleLarge?.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                textAlign: TextAlign.center,
                               ),
+                              const SizedBox(
+                                width: CreateTopicScreen._headerSideWidth,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: AppSpacing.xl,
+                          ),
+                          Text(
+                            'Name',
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.w700,
                             ),
-                            const SizedBox(
-                              width: CreateTopicScreen._headerSideWidth,
+                          ),
+                          const SizedBox(
+                            height: AppSpacing.sm,
+                          ),
+                          AppTextField(
+                            controller: _nameController,
+                            hintText: 'Enter topic name',
+                          ),
+                          const SizedBox(
+                            height: AppSpacing.xl,
+                          ),
+                          _CreateTopicSection(
+                            title: 'Icon',
+                            child: TopicIconSelector(
+                              selectedIcon: _selectedIcon,
+                              onChanged: _updateSelectedIcon,
                             ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: AppSpacing.xl,
-                        ),
-                        Text(
-                          'Name',
-                          style: theme.textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.w700,
                           ),
-                        ),
-                        const SizedBox(
-                          height: AppSpacing.sm,
-                        ),
-                        AppTextField(
-                          controller: _nameController,
-                          hintText: 'Enter topic name',
-                        ),
-                        const SizedBox(
-                          height: AppSpacing.xl,
-                        ),
-                        _CreateTopicSection(
-                          title: 'Icon',
-                          child: TopicIconSelector(
-                            selectedIcon: _selectedIcon,
-                            onChanged: _updateSelectedIcon,
+                          const SizedBox(
+                            height: AppSpacing.xl,
                           ),
-                        ),
-                        const SizedBox(
-                          height: AppSpacing.xl,
-                        ),
-                        _CreateTopicSection(
-                          title: 'Color',
-                          child: TopicColorSelector(
-                            selectedColor: _selectedColor,
-                            onChanged: _updateSelectedColor,
+                          _CreateTopicSection(
+                            title: 'Color',
+                            child: TopicColorSelector(
+                              selectedColor: _selectedColor,
+                              onChanged: _updateSelectedColor,
+                            ),
                           ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: AppSpacing.xl,
                         ),
-                        const Spacer(),
-                        AppButton(
+                        child: AppButton(
                           text: 'Create Topic',
                           isLoading: _isSubmitting,
                           onPressed: _canCreate && !_isSubmitting
                               ? _handleCreatePressed
                               : null,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               );
@@ -283,39 +288,6 @@ class _CreateTopicSection extends StatelessWidget {
         ),
         child,
       ],
-    );
-  }
-}
-
-class _CreateTopicPlaceholder extends StatelessWidget {
-  const _CreateTopicPlaceholder({
-    required this.text,
-  });
-
-  final String text;
-
-  @override
-  Widget build(
-    BuildContext context,
-  ) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return AppCard(
-      child: Container(
-        height: CreateTopicScreen._placeholderHeight,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(
-            AppRadius.large,
-          ),
-        ),
-        child: Text(
-          text,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
-        ),
-      ),
     );
   }
 }

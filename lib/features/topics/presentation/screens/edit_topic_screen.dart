@@ -89,86 +89,94 @@ class _EditTopicScreenState extends ConsumerState<EditTopicScreen> {
                   constraints: BoxConstraints(
                     minHeight: constraints.maxHeight,
                   ),
-                  child: IntrinsicHeight(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: EditTopicScreen._headerSideWidth,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: IconButton(
-                                  onPressed: _isSubmitting
-                                      ? null
-                                      : _handleClosePressed,
-                                  icon: const Icon(
-                                    Icons.close_rounded,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: EditTopicScreen._headerSideWidth,
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: IconButton(
+                                    onPressed: _isSubmitting
+                                        ? null
+                                        : _handleClosePressed,
+                                    icon: const Icon(
+                                      Icons.close_rounded,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                'Edit Topic',
-                                style: theme.textTheme.titleLarge?.copyWith(
-                                  fontWeight: FontWeight.w700,
+                              Expanded(
+                                child: Text(
+                                  'Edit Topic',
+                                  style: theme.textTheme.titleLarge?.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                textAlign: TextAlign.center,
                               ),
+                              const SizedBox(
+                                width: EditTopicScreen._headerSideWidth,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: AppSpacing.xl,
+                          ),
+                          Text(
+                            'Name',
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.w700,
                             ),
-                            const SizedBox(
-                              width: EditTopicScreen._headerSideWidth,
+                          ),
+                          const SizedBox(
+                            height: AppSpacing.sm,
+                          ),
+                          AppTextField(
+                            controller: _nameController,
+                            hintText: 'Enter topic name',
+                          ),
+                          const SizedBox(
+                            height: AppSpacing.xl,
+                          ),
+                          _EditTopicSection(
+                            title: 'Icon',
+                            child: TopicIconSelector(
+                              selectedIcon: _selectedIcon,
+                              onChanged: _updateSelectedIcon,
                             ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: AppSpacing.xl,
-                        ),
-                        Text(
-                          'Name',
-                          style: theme.textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.w700,
                           ),
-                        ),
-                        const SizedBox(
-                          height: AppSpacing.sm,
-                        ),
-                        AppTextField(
-                          controller: _nameController,
-                          hintText: 'Enter topic name',
-                        ),
-                        const SizedBox(
-                          height: AppSpacing.xl,
-                        ),
-                        _EditTopicSection(
-                          title: 'Icon',
-                          child: TopicIconSelector(
-                            selectedIcon: _selectedIcon,
-                            onChanged: _updateSelectedIcon,
+                          const SizedBox(
+                            height: AppSpacing.xl,
                           ),
-                        ),
-                        const SizedBox(
-                          height: AppSpacing.xl,
-                        ),
-                        _EditTopicSection(
-                          title: 'Color',
-                          child: TopicColorSelector(
-                            selectedColor: _selectedColor,
-                            onChanged: _updateSelectedColor,
+                          _EditTopicSection(
+                            title: 'Color',
+                            child: TopicColorSelector(
+                              selectedColor: _selectedColor,
+                              onChanged: _updateSelectedColor,
+                            ),
                           ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: AppSpacing.xl,
                         ),
-                        const Spacer(),
-                        AppButton(
+                        child: AppButton(
                           text: 'Save',
                           isLoading: _isSubmitting,
                           onPressed: _canSave && !_isSubmitting
                               ? _handleSavePressed
                               : null,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               );

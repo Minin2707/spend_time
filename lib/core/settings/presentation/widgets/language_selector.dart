@@ -17,7 +17,10 @@ class LanguageSelector extends StatelessWidget {
     BuildContext context,
   ) {
     return DropdownButtonFormField<AppLanguage>(
-      value: selectedLanguage,
+      key: ValueKey(
+        selectedLanguage,
+      ),
+      initialValue: selectedLanguage,
       items: [
         DropdownMenuItem(
           value: AppLanguage.system,
