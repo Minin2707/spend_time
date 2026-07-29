@@ -126,11 +126,14 @@ abstract final class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.createTopic,
-        builder: (_, _) => const CreateTopicScreen(),
+        pageBuilder: (_, state) => _buildFadeSlidePage<bool>(
+          state: state,
+          child: const CreateTopicScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.editTopic,
-        builder: (
+        pageBuilder: (
           _,
           state,
         ) {
@@ -140,20 +143,26 @@ abstract final class AppRouter {
           final extra = state.extra;
 
           if (topicId == null || extra is! EditTopicRouteArgs) {
-            return const HomeScreen();
+            return _buildFadeSlidePage<bool>(
+              state: state,
+              child: const HomeScreen(),
+            );
           }
 
-          return EditTopicScreen(
-            topicId: topicId,
-            initialName: extra.initialName,
-            initialColor: extra.initialColor,
-            initialIcon: extra.initialIcon,
+          return _buildFadeSlidePage<bool>(
+            state: state,
+            child: EditTopicScreen(
+              topicId: topicId,
+              initialName: extra.initialName,
+              initialColor: extra.initialColor,
+              initialIcon: extra.initialIcon,
+            ),
           );
         },
       ),
       GoRoute(
         path: AppRoutes.sessionHistory,
-        builder: (
+        pageBuilder: (
           _,
           state,
         ) {
@@ -161,12 +170,62 @@ abstract final class AppRouter {
             state.pathParameters['topicId']!,
           );
 
-          return SessionHistoryScreen(
-            topicId: topicId,
+          return _buildFadeSlidePage<void>(
+            state: state,
+            child: SessionHistoryScreen(
+              topicId: topicId,
+            ),
           );
         },
       ),
     ],
   );
+  }
+
+  static CustomTransitionPage<T> _buildFadeSlidePage<T>({
+    required GoRouterState state,
+    required Widget child,
+  }) {
+    return CustomTransitionPage<T>(
+      key: state.pageKey,
+      transitionDuration: const Duration(
+        milliseconds: 220,
+      ),
+      reverseTransitionDuration: const Duration(
+        milliseconds: 220,
+      ),
+      child: child,
+      transitionsBuilder: (
+        context,
+        animation,
+        _,
+        child,
+      ) {
+        if (MediaQuery.disableAnimationsOf(context)) {
+          return child;
+        }
+
+        final offset = Tween<Offset>(
+          begin: const Offset(
+            0,
+            0.06,
+          ),
+          end: Offset.zero,
+        ).animate(
+          CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeOut,
+          ),
+        );
+
+        return FadeTransition(
+          opacity: animation,
+          child: SlideTransition(
+            position: offset,
+            child: child,
+          ),
+        );
+      },
+    );
   }
 }

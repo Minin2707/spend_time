@@ -86,6 +86,13 @@ class _StatisticsSummaryRow extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) {
+    final valueAnimationDuration =
+        MediaQuery.disableAnimationsOf(context)
+            ? Duration.zero
+            : const Duration(
+                milliseconds: 180,
+              );
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -97,10 +104,38 @@ class _StatisticsSummaryRow extends StatelessWidget {
         const SizedBox(
           width: AppSpacing.md,
         ),
-        Text(
-          value,
-          softWrap: false,
-          textAlign: TextAlign.end,
+        AnimatedSwitcher(
+          duration: valueAnimationDuration,
+          transitionBuilder: (child, animation) {
+            final offset = Tween<Offset>(
+              begin: const Offset(
+                0,
+                0.18,
+              ),
+              end: Offset.zero,
+            ).animate(
+              CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeOut,
+              ),
+            );
+
+            return FadeTransition(
+              opacity: animation,
+              child: SlideTransition(
+                position: offset,
+                child: child,
+              ),
+            );
+          },
+          child: Text(
+            value,
+            key: ValueKey<String>(
+              value,
+            ),
+            softWrap: false,
+            textAlign: TextAlign.end,
+          ),
         ),
       ],
     );

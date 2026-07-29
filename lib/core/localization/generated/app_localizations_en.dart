@@ -51,6 +51,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get topicNameLabel => 'Topic name';
 
   @override
+  String get topicNameHint => 'Enter topic name';
+
+  @override
+  String get topicIconSectionTitle => 'Icon';
+
+  @override
+  String get topicColorSectionTitle => 'Color';
+
+  @override
+  String get closeButtonTooltip => 'Close';
+
+  @override
   String get createButton => 'Create';
 
   @override

@@ -24,6 +24,10 @@
 
   "createTopicTitle": "Новая тема",
   "topicNameLabel": "Название темы",
+  "topicNameHint": "Введите название темы",
+  "topicIconSectionTitle": "Иконка",
+  "topicColorSectionTitle": "Цвет",
+  "closeButtonTooltip": "Закрыть",
   "createButton": "Создать",
   "cancelButton": "Отмена",
 

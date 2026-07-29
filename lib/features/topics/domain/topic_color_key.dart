@@ -4,7 +4,13 @@ enum TopicColorKey {
   orange,
   rose,
   violet,
-  teal;
+  teal,
+  cyan,
+  lime,
+  yellow,
+  red,
+  pink,
+  indigo;
 
   static TopicColorKey fromStorageValue(
     String value,
@@ -16,6 +22,12 @@ enum TopicColorKey {
       'rose' => TopicColorKey.rose,
       'violet' => TopicColorKey.violet,
       'teal' => TopicColorKey.teal,
+      'cyan' => TopicColorKey.cyan,
+      'lime' => TopicColorKey.lime,
+      'yellow' => TopicColorKey.yellow,
+      'red' => TopicColorKey.red,
+      'pink' => TopicColorKey.pink,
+      'indigo' => TopicColorKey.indigo,
       _ => TopicColorKey.blue,
     };
   }
@@ -28,6 +40,12 @@ enum TopicColorKey {
       TopicColorKey.rose => 'rose',
       TopicColorKey.violet => 'violet',
       TopicColorKey.teal => 'teal',
+      TopicColorKey.cyan => 'cyan',
+      TopicColorKey.lime => 'lime',
+      TopicColorKey.yellow => 'yellow',
+      TopicColorKey.red => 'red',
+      TopicColorKey.pink => 'pink',
+      TopicColorKey.indigo => 'indigo',
     };
   }
 }

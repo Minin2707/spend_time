@@ -42,6 +42,12 @@ class TopicCard extends ConsumerWidget {
       ) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
+    final timerIconAnimationDuration =
+        MediaQuery.disableAnimationsOf(context)
+            ? Duration.zero
+            : const Duration(
+                milliseconds: 140,
+              );
     final AsyncValue<TopicStatistics> statistics = ref.watch(
       topicStatisticsProvider(
         topic.id,
@@ -141,10 +147,35 @@ class TopicCard extends ConsumerWidget {
                         ),
                         padding: EdgeInsets.zero,
                       ),
-                      icon: Icon(
-                        isActive
-                            ? Icons.pause_rounded
-                            : Icons.play_arrow_rounded,
+                      icon: AnimatedSwitcher(
+                        duration: timerIconAnimationDuration,
+                        transitionBuilder: (child, animation) {
+                          final scale = Tween<double>(
+                            begin: 0.88,
+                            end: 1,
+                          ).animate(
+                            CurvedAnimation(
+                              parent: animation,
+                              curve: Curves.easeOut,
+                            ),
+                          );
+
+                          return FadeTransition(
+                            opacity: animation,
+                            child: ScaleTransition(
+                              scale: scale,
+                              child: child,
+                            ),
+                          );
+                        },
+                        child: Icon(
+                          isActive
+                              ? Icons.pause_rounded
+                              : Icons.play_arrow_rounded,
+                          key: ValueKey<bool>(
+                            isActive,
+                          ),
+                        ),
                       ),
                       onPressed: isActive
                           ? onStop

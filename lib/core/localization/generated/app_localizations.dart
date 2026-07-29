@@ -182,6 +182,30 @@ abstract class AppLocalizations {
   /// **'Topic name'**
   String get topicNameLabel;
 
+  /// No description provided for @topicNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter topic name'**
+  String get topicNameHint;
+
+  /// No description provided for @topicIconSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Icon'**
+  String get topicIconSectionTitle;
+
+  /// No description provided for @topicColorSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Color'**
+  String get topicColorSectionTitle;
+
+  /// No description provided for @closeButtonTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get closeButtonTooltip;
+
   /// No description provided for @createButton.
   ///
   /// In en, this message translates to:

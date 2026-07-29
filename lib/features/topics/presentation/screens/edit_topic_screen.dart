@@ -106,6 +106,7 @@ class _EditTopicScreenState extends ConsumerState<EditTopicScreen> {
                                     onPressed: _isSubmitting
                                         ? null
                                         : _handleClosePressed,
+                                    tooltip: context.l10n.closeButtonTooltip,
                                     icon: const Icon(
                                       Icons.close_rounded,
                                     ),
@@ -114,7 +115,7 @@ class _EditTopicScreenState extends ConsumerState<EditTopicScreen> {
                               ),
                               Expanded(
                                 child: Text(
-                                  'Edit Topic',
+                                  context.l10n.editTopicTitle,
                                   style: theme.textTheme.titleLarge?.copyWith(
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -130,7 +131,7 @@ class _EditTopicScreenState extends ConsumerState<EditTopicScreen> {
                             height: AppSpacing.xl,
                           ),
                           Text(
-                            'Name',
+                            context.l10n.editTopicNameLabel,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.w700,
                             ),
@@ -140,13 +141,13 @@ class _EditTopicScreenState extends ConsumerState<EditTopicScreen> {
                           ),
                           AppTextField(
                             controller: _nameController,
-                            hintText: 'Enter topic name',
+                            hintText: context.l10n.topicNameHint,
                           ),
                           const SizedBox(
                             height: AppSpacing.xl,
                           ),
                           _EditTopicSection(
-                            title: 'Icon',
+                            title: context.l10n.topicIconSectionTitle,
                             child: TopicIconSelector(
                               selectedIcon: _selectedIcon,
                               onChanged: _updateSelectedIcon,
@@ -156,7 +157,7 @@ class _EditTopicScreenState extends ConsumerState<EditTopicScreen> {
                             height: AppSpacing.xl,
                           ),
                           _EditTopicSection(
-                            title: 'Color',
+                            title: context.l10n.topicColorSectionTitle,
                             child: TopicColorSelector(
                               selectedColor: _selectedColor,
                               onChanged: _updateSelectedColor,
@@ -169,7 +170,7 @@ class _EditTopicScreenState extends ConsumerState<EditTopicScreen> {
                           top: AppSpacing.xl,
                         ),
                         child: AppButton(
-                          text: 'Save',
+                          text: context.l10n.editTopicSaveButton,
                           isLoading: _isSubmitting,
                           onPressed: _canSave && !_isSubmitting
                               ? _handleSavePressed

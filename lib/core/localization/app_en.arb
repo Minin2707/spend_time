@@ -27,6 +27,10 @@
   "noTopicsSubtitle": "Create your first topic",
   "createTopicTitle": "New topic",
   "topicNameLabel": "Topic name",
+  "topicNameHint": "Enter topic name",
+  "topicIconSectionTitle": "Icon",
+  "topicColorSectionTitle": "Color",
+  "closeButtonTooltip": "Close",
   "createButton": "Create",
   "cancelButton": "Cancel",
 

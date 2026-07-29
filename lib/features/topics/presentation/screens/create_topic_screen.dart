@@ -94,6 +94,7 @@ class _CreateTopicScreenState extends ConsumerState<CreateTopicScreen> {
                                     onPressed: _isSubmitting
                                         ? null
                                         : _handleClosePressed,
+                                    tooltip: context.l10n.closeButtonTooltip,
                                     icon: const Icon(
                                       Icons.close_rounded,
                                     ),
@@ -102,7 +103,7 @@ class _CreateTopicScreenState extends ConsumerState<CreateTopicScreen> {
                               ),
                               Expanded(
                                 child: Text(
-                                  'Create Topic',
+                                  context.l10n.createTopicTitle,
                                   style: theme.textTheme.titleLarge?.copyWith(
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -118,7 +119,7 @@ class _CreateTopicScreenState extends ConsumerState<CreateTopicScreen> {
                             height: AppSpacing.xl,
                           ),
                           Text(
-                            'Name',
+                            context.l10n.topicNameLabel,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.w700,
                             ),
@@ -128,13 +129,13 @@ class _CreateTopicScreenState extends ConsumerState<CreateTopicScreen> {
                           ),
                           AppTextField(
                             controller: _nameController,
-                            hintText: 'Enter topic name',
+                            hintText: context.l10n.topicNameHint,
                           ),
                           const SizedBox(
                             height: AppSpacing.xl,
                           ),
                           _CreateTopicSection(
-                            title: 'Icon',
+                            title: context.l10n.topicIconSectionTitle,
                             child: TopicIconSelector(
                               selectedIcon: _selectedIcon,
                               onChanged: _updateSelectedIcon,
@@ -144,7 +145,7 @@ class _CreateTopicScreenState extends ConsumerState<CreateTopicScreen> {
                             height: AppSpacing.xl,
                           ),
                           _CreateTopicSection(
-                            title: 'Color',
+                            title: context.l10n.topicColorSectionTitle,
                             child: TopicColorSelector(
                               selectedColor: _selectedColor,
                               onChanged: _updateSelectedColor,
@@ -157,7 +158,7 @@ class _CreateTopicScreenState extends ConsumerState<CreateTopicScreen> {
                           top: AppSpacing.xl,
                         ),
                         child: AppButton(
-                          text: 'Create Topic',
+                          text: context.l10n.createTopic,
                           isLoading: _isSubmitting,
                           onPressed: _canCreate && !_isSubmitting
                               ? _handleCreatePressed

@@ -51,6 +51,18 @@ class AppLocalizationsRu extends AppLocalizations {
   String get topicNameLabel => 'Название темы';
 
   @override
+  String get topicNameHint => 'Введите название темы';
+
+  @override
+  String get topicIconSectionTitle => 'Иконка';
+
+  @override
+  String get topicColorSectionTitle => 'Цвет';
+
+  @override
+  String get closeButtonTooltip => 'Закрыть';
+
+  @override
   String get createButton => 'Создать';
 
   @override
