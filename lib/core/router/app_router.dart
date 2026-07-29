@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:spend_time/core/privacy/presentation/screens/privacy_policy_screen.dart';
 import 'package:spend_time/core/router/app_routes.dart';
 import 'package:spend_time/core/router/main_navigation_shell.dart';
 import 'package:spend_time/core/settings/presentation/screens/settings_screen.dart';
@@ -177,6 +178,17 @@ abstract final class AppRouter {
             ),
           );
         },
+      ),
+      GoRoute(
+        path: AppRoutes.privacyPolicy,
+        pageBuilder: (
+          _,
+          state,
+        ) =>
+            _buildFadeSlidePage<void>(
+          state: state,
+          child: const PrivacyPolicyScreen(),
+        ),
       ),
     ],
   );

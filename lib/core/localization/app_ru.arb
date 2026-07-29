@@ -64,6 +64,22 @@
   "settingsTitle": "Настройки",
   "appearanceSectionTitle": "Внешний вид",
   "languageSectionTitle": "Язык",
+  "feedbackSectionTitle": "Поддержка",
+  "feedbackTitle": "Обратная связь",
+  "feedbackSubtitle": "Отправить отзыв или сообщить о проблеме",
+  "feedbackEmailSubject": "Обратная связь по Spend Time",
+  "feedbackEmailBody": "Опишите здесь ваше предложение или проблему.\n\nВерсия приложения: {version}\nСборка: {buildNumber}",
+  "@feedbackEmailBody": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "buildNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "openEmailErrorMessage": "Не удалось открыть почтовое приложение.",
   "aboutSectionTitle": "О приложении",
   "aboutAppTitle": "О Spend Time",
   "aboutAppDescription": "Простой локальный трекер времени по темам.",
@@ -79,6 +95,7 @@
       }
     }
   },
+  "privacyPolicyTitle": "Политика конфиденциальности",
   "updateThemeErrorMessage": "Не удалось обновить тему оформления.",
   "updateLanguageErrorMessage": "Не удалось изменить язык. Попробуйте ещё раз.",
   "noStatisticsDistributionTitle": "Распределения пока нет",

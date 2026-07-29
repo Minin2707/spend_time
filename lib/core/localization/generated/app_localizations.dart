@@ -374,6 +374,42 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get languageSectionTitle;
 
+  /// No description provided for @feedbackSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get feedbackSectionTitle;
+
+  /// No description provided for @feedbackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Feedback'**
+  String get feedbackTitle;
+
+  /// No description provided for @feedbackSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Send feedback or report a problem'**
+  String get feedbackSubtitle;
+
+  /// No description provided for @feedbackEmailSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Spend Time feedback'**
+  String get feedbackEmailSubject;
+
+  /// No description provided for @feedbackEmailBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe your suggestion or problem here.\n\nApp version: {version}\nBuild: {buildNumber}'**
+  String feedbackEmailBody(String version, String buildNumber);
+
+  /// No description provided for @openEmailErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open your email app.'**
+  String get openEmailErrorMessage;
+
   /// No description provided for @aboutSectionTitle.
   ///
   /// In en, this message translates to:
@@ -403,6 +439,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Version {version} ({buildNumber})'**
   String appVersionLabel(String version, String buildNumber);
+
+  /// No description provided for @privacyPolicyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicyTitle;
 
   /// No description provided for @updateThemeErrorMessage.
   ///

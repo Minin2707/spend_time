@@ -150,6 +150,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageSectionTitle => 'Language';
 
   @override
+  String get feedbackSectionTitle => 'Support';
+
+  @override
+  String get feedbackTitle => 'Feedback';
+
+  @override
+  String get feedbackSubtitle => 'Send feedback or report a problem';
+
+  @override
+  String get feedbackEmailSubject => 'Spend Time feedback';
+
+  @override
+  String feedbackEmailBody(String version, String buildNumber) {
+    return 'Describe your suggestion or problem here.\n\nApp version: $version\nBuild: $buildNumber';
+  }
+
+  @override
+  String get openEmailErrorMessage => 'Could not open your email app.';
+
+  @override
   String get aboutSectionTitle => 'About';
 
   @override
@@ -167,6 +187,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String appVersionLabel(String version, String buildNumber) {
     return 'Version $version ($buildNumber)';
   }
+
+  @override
+  String get privacyPolicyTitle => 'Privacy Policy';
 
   @override
   String get updateThemeErrorMessage => 'Could not update theme.';

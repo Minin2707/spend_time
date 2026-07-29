@@ -150,6 +150,26 @@ class AppLocalizationsRu extends AppLocalizations {
   String get languageSectionTitle => 'Язык';
 
   @override
+  String get feedbackSectionTitle => 'Поддержка';
+
+  @override
+  String get feedbackTitle => 'Обратная связь';
+
+  @override
+  String get feedbackSubtitle => 'Отправить отзыв или сообщить о проблеме';
+
+  @override
+  String get feedbackEmailSubject => 'Обратная связь по Spend Time';
+
+  @override
+  String feedbackEmailBody(String version, String buildNumber) {
+    return 'Опишите здесь ваше предложение или проблему.\n\nВерсия приложения: $version\nСборка: $buildNumber';
+  }
+
+  @override
+  String get openEmailErrorMessage => 'Не удалось открыть почтовое приложение.';
+
+  @override
   String get aboutSectionTitle => 'О приложении';
 
   @override
@@ -167,6 +187,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String appVersionLabel(String version, String buildNumber) {
     return 'Версия $version ($buildNumber)';
   }
+
+  @override
+  String get privacyPolicyTitle => 'Политика конфиденциальности';
 
   @override
   String get updateThemeErrorMessage => 'Не удалось обновить тему оформления.';

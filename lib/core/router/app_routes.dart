@@ -9,6 +9,8 @@ abstract final class AppRoutes {
 
   static const String settings = '/settings';
 
+  static const String privacyPolicy = '/privacy-policy';
+
   static const String createTopic = '/topics/create';
 
   static const String editTopic = '/topics/:topicId/edit';

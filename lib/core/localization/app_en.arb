@@ -70,6 +70,22 @@
   "settingsTitle": "Settings",
   "appearanceSectionTitle": "Appearance",
   "languageSectionTitle": "Language",
+  "feedbackSectionTitle": "Support",
+  "feedbackTitle": "Feedback",
+  "feedbackSubtitle": "Send feedback or report a problem",
+  "feedbackEmailSubject": "Spend Time feedback",
+  "feedbackEmailBody": "Describe your suggestion or problem here.\n\nApp version: {version}\nBuild: {buildNumber}",
+  "@feedbackEmailBody": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "buildNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "openEmailErrorMessage": "Could not open your email app.",
   "aboutSectionTitle": "About",
   "aboutAppTitle": "About Spend Time",
   "aboutAppDescription": "A simple local time tracker for your topics.",
@@ -85,6 +101,7 @@
       }
     }
   },
+  "privacyPolicyTitle": "Privacy Policy",
   "updateThemeErrorMessage": "Could not update theme.",
   "updateLanguageErrorMessage": "Could not change the language. Please try again.",
   "noStatisticsDistributionTitle": "No distribution yet",
